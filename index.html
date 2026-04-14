@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>アイシン高丘東北 SNS投稿モック</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Meiryo", "Hiragino Kaku Gothic ProN", sans-serif;
+    background: #fafafa; color: #262626;
+  }
+
+  /* ヘッダー */
+  .page-header {
+    background: #1a3c6e; color: #fff;
+    padding: 30px 40px; text-align: center;
+  }
+  .page-header h1 { font-size: 24px; margin-bottom: 6px; }
+  .page-header p { font-size: 13px; opacity: 0.8; }
+
+  /* セクション */
+  .section {
+    max-width: 1200px; margin: 30px auto; padding: 0 20px;
+  }
+  .section-title {
+    font-size: 20px; font-weight: 700; color: #1a3c6e;
+    padding: 12px 0; border-bottom: 3px solid #1a3c6e;
+    margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+  }
+  .section-badge {
+    background: #1a3c6e; color: #fff; font-size: 12px;
+    padding: 4px 14px; border-radius: 20px;
+  }
+
+  /* Instagram風フレーム */
+  .ig-post {
+    background: #fff; border: 1px solid #dbdbdb; border-radius: 8px;
+    margin-bottom: 30px; overflow: hidden;
+  }
+  .ig-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 16px; border-bottom: 1px solid #efefef;
+  }
+  .ig-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #1a3c6e; display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 10px; font-weight: 700;
+  }
+  .ig-username { font-size: 14px; font-weight: 600; }
+  .ig-time { font-size: 12px; color: #8e8e8e; margin-left: auto; }
+
+  /* カルーセル */
+  .carousel-wrap { position: relative; overflow: hidden; }
+  .carousel-track {
+    display: flex; transition: transform 0.3s ease;
+  }
+  .carousel-track img {
+    width: 100%; height: auto; display: block; flex-shrink: 0;
+  }
+  .carousel-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 30px; height: 30px; border-radius: 50%;
+    background: rgba(255,255,255,0.85); border: none;
+    cursor: pointer; font-size: 16px; color: #262626;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    z-index: 10;
+  }
+  .carousel-nav:hover { background: #fff; }
+  .carousel-prev { left: 10px; }
+  .carousel-next { right: 10px; }
+  .carousel-dots {
+    display: flex; justify-content: center; gap: 6px;
+    padding: 12px 0;
+  }
+  .carousel-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #c4c4c4; transition: background 0.2s;
+  }
+  .carousel-dot.active { background: #1a3c6e; }
+
+  /* IG アクションバー */
+  .ig-actions {
+    display: flex; align-items: center; gap: 16px;
+    padding: 10px 16px;
+  }
+  .ig-action-btn {
+    font-size: 22px; cursor: pointer; background: none; border: none;
+  }
+  .ig-bookmark { margin-left: auto; }
+
+  /* キャプション */
+  .ig-caption {
+    padding: 0 16px 16px;
+    font-size: 13px; line-height: 1.7;
+  }
+  .ig-caption .username { font-weight: 600; }
+  .ig-caption .text { color: #262626; white-space: pre-line; }
+  .ig-caption .tags { color: #00376b; margin-top: 8px; font-size: 12px; }
+  .ig-caption .more {
+    color: #8e8e8e; cursor: pointer; font-size: 13px;
+    border: none; background: none; padding: 0;
+  }
+  .caption-full { display: none; }
+  .caption-full.show { display: block; }
+
+  /* KPI情報 */
+  .kpi-bar {
+    display: flex; gap: 16px; padding: 12px 16px;
+    background: #f0f4f8; border-top: 1px solid #efefef;
+    font-size: 12px; color: #555;
+  }
+  .kpi-item { display: flex; align-items: center; gap: 4px; }
+  .kpi-label { font-weight: 600; color: #1a3c6e; }
+
+  /* 投稿情報カード */
+  .post-info {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px; padding: 16px;
+    background: #f8f9fb; border-top: 1px solid #efefef;
+  }
+  .info-card {
+    background: #fff; border-radius: 8px; padding: 14px;
+    border: 1px solid #e8e8e8; text-align: center;
+  }
+  .info-card .label { font-size: 11px; color: #8e8e8e; margin-bottom: 4px; }
+  .info-card .value { font-size: 16px; font-weight: 700; color: #1a3c6e; }
+
+  /* 動画サムネ */
+  .video-wrap {
+    position: relative; cursor: pointer;
+  }
+  .video-wrap img { width: 100%; display: block; }
+
+  /* 注記 */
+  .note-bar {
+    background: #fff8e1; border-left: 4px solid #ffa000;
+    padding: 12px 16px; margin: 20px 0; border-radius: 0 6px 6px 0;
+    font-size: 13px; color: #555;
+  }
+
+  /* レスポンシブ */
+  @media (max-width: 700px) {
+    .post-info { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>アイシン高丘東北 SNS採用コンテンツ ― 投稿モック</h1>
+  <p>制作：Unsee｜投稿予定：5/12 → 5/21 → 5/30｜※数字は仮値（貴社回答後に差し替え）</p>
+</div>
+
+<!-- ================================ -->
+<!-- 静止画① 採用Q&A -->
+<!-- ================================ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-badge">投稿1 / 5月12日（火）</span>
+    静止画① 採用Q&Aカルーセル
+  </div>
+
+  <div class="ig-post">
+    <div class="ig-header">
+      <div class="ig-avatar">AT</div>
+      <div>
+        <div class="ig-username">aisin_takaoka_tohoku</div>
+      </div>
+      <div class="ig-time">5月12日 18:00</div>
+    </div>
+
+    <div class="carousel-wrap" id="carousel1">
+      <div class="carousel-track" id="track1">
+        <img src="final_mock/final_static01_01_cover.png" alt="表紙">
+        <img src="final_mock/final_static01_02_overtime.png" alt="Q1 残業">
+        <img src="final_mock/final_static01_03_paid_leave.png" alt="Q2 有給">
+        <img src="final_mock/final_static01_04_beginner.png" alt="Q3 未経験">
+        <img src="final_mock/final_static01_05_assignment.png" alt="Q4 配属">
+        <img src="final_mock/final_static01_06_cta.png" alt="CTA">
+      </div>
+      <button class="carousel-nav carousel-prev" onclick="moveCarousel('carousel1', -1)">◀</button>
+      <button class="carousel-nav carousel-next" onclick="moveCarousel('carousel1', 1)">▶</button>
+    </div>
+    <div class="carousel-dots" id="dots1">
+      <div class="carousel-dot active"></div>
+      <div class="carousel-dot"></div>
+      <div class="carousel-dot"></div>
+      <div class="carousel-dot"></div>
+      <div class="carousel-dot"></div>
+      <div class="carousel-dot"></div>
+    </div>
+
+    <div class="ig-actions">
+      <button class="ig-action-btn">♡</button>
+      <button class="ig-action-btn">💬</button>
+      <button class="ig-action-btn">↗</button>
+      <button class="ig-action-btn ig-bookmark">🔖</button>
+    </div>
+
+    <div class="ig-caption">
+      <span class="username">aisin_takaoka_tohoku</span>
+      <span class="text"> 【よく聞かれる質問、正直に答えます】
+
+「残業ってどれくらい？」
+「有給って取れる？」
+「未経験でも大丈夫？」
+
+就活中、気になるけど聞きにくいこと、
+ぜんぶ数字でお答えします 📊</span>
+      <button class="more" onclick="toggleCaption('cap1')">...もっと見る</button>
+      <div class="caption-full" id="cap1">
+        <span class="text">
+アイシン高丘東北は
+宮城県大崎市の自動車部品メーカー。
+アイシングループの安定基盤のもと、
+高卒・新卒・中途、幅広く採用中です ✨
+
+気になった方は保存しておいてくださいね 🔖
+会社見学・応募はプロフィールから 👆</span>
+        <div class="tags">
+#高卒採用 #工場勤務 #ものづくり #自動車部品 #宮城求人 #大崎市 #東北就職 #製造業就職 #アイシングループ #アイシン高丘東北 #AT_T質問箱 #AT_T #宮城高校生 #高校生就活 #進路選択
+        </div>
+      </div>
+    </div>
+
+    <div class="post-info">
+      <div class="info-card"><div class="label">役割</div><div class="value">不安解消・初接触</div></div>
+      <div class="info-card"><div class="label">形式</div><div class="value">カルーセル 6枚</div></div>
+      <div class="info-card"><div class="label">KPI</div><div class="value">保存数 / リーチ / プロフ遷移</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================ -->
+<!-- 静止画② 職種理解 -->
+<!-- ================================ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-badge">投稿2 / 5月21日（木）</span>
+    静止画② 職種・仕事理解カルーセル
+  </div>
+
+  <div class="ig-post">
+    <div class="ig-header">
+      <div class="ig-avatar">AT</div>
+      <div>
+        <div class="ig-username">aisin_takaoka_tohoku</div>
+      </div>
+      <div class="ig-time">5月21日 18:00</div>
+    </div>
+
+    <div class="carousel-wrap" id="carousel2">
+      <div class="carousel-track" id="track2">
+        <img src="final_mock/final_static02_01_cover.png" alt="表紙">
+        <img src="mock_images/static02_02_mission.png" alt="ミッション">
+        <img src="final_mock/final_static02_03_jobs.png" alt="業務3つ">
+        <img src="final_mock/final_static02_04_timeline.png" alt="1日の流れ">
+        <img src="mock_images/static02_05_fit_cta.png" alt="向いてる人+CTA">
+      </div>
+      <button class="carousel-nav carousel-prev" onclick="moveCarousel('carousel2', -1)">◀</button>
+      <button class="carousel-nav carousel-next" onclick="moveCarousel('carousel2', 1)">▶</button>
+    </div>
+    <div class="carousel-dots" id="dots2">
+      <div class="carousel-dot active"></div>
+      <div class="carousel-dot"></div>
+      <div class="carousel-dot"></div>
+      <div class="carousel-dot"></div>
+      <div class="carousel-dot"></div>
+    </div>
+
+    <div class="ig-actions">
+      <button class="ig-action-btn">♡</button>
+      <button class="ig-action-btn">💬</button>
+      <button class="ig-action-btn">↗</button>
+      <button class="ig-action-btn ig-bookmark">🔖</button>
+    </div>
+
+    <div class="ig-caption">
+      <span class="username">aisin_takaoka_tohoku</span>
+      <span class="text"> 【製造のお仕事って何するの？🔧】
+
+「工場で働くってどんな感じ？」
+「未経験でもできるの？」
+
+そんな疑問に答えます 💡</span>
+      <button class="more" onclick="toggleCaption('cap2')">...もっと見る</button>
+      <div class="caption-full" id="cap2">
+        <span class="text">
+アイシン高丘東北の製造職は
+クルマの安全を支える重要部品づくり。
+
+やることはシンプルに3つ：
+① 機械オペレーション
+② 検査・品質チェック
+③ 段取り替え・組付け
+
+手順書があるから未経験でも安心。
+先輩がマンツーマンで教えてくれます 🙌
+
+高卒1年目から活躍している先輩も。
+「モノづくりが好き」なら、それだけで十分です ✨
+
+気になった方はプロフィールから
+会社見学の申し込みができます 👆</span>
+        <div class="tags">
+#高卒採用 #工場勤務 #ものづくり #自動車部品 #製造業 #宮城求人 #大崎市 #東北就職 #製造業就職 #アイシングループ #アイシン高丘東北 #AT_Tの仕事図鑑 #AT_T #宮城高校生 #高校生就活
+        </div>
+      </div>
+    </div>
+
+    <div class="post-info">
+      <div class="info-card"><div class="label">役割</div><div class="value">仕事の解像度UP</div></div>
+      <div class="info-card"><div class="label">形式</div><div class="value">カルーセル 5枚</div></div>
+      <div class="info-card"><div class="label">KPI</div><div class="value">保存数 / 滞在時間 / プロフ遷移</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================ -->
+<!-- 動画① 新人密着 -->
+<!-- ================================ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-badge">投稿3 / 5月30日（土）</span>
+    動画① 新人の1日密着ショート
+  </div>
+
+  <div class="ig-post">
+    <div class="ig-header">
+      <div class="ig-avatar">AT</div>
+      <div>
+        <div class="ig-username">aisin_takaoka_tohoku</div>
+      </div>
+      <div class="ig-time">5月30日 18:00</div>
+    </div>
+
+    <div class="video-wrap">
+      <img src="final_mock/final_video01_thumbnail.png" alt="動画サムネイル">
+    </div>
+
+    <div class="ig-actions">
+      <button class="ig-action-btn">♡</button>
+      <button class="ig-action-btn">💬</button>
+      <button class="ig-action-btn">↗</button>
+      <button class="ig-action-btn ig-bookmark">🔖</button>
+    </div>
+
+    <div class="ig-caption">
+      <span class="username">aisin_takaoka_tohoku</span>
+      <span class="text"> 【新人の1日、全部見せます 👀】
+
+「工場ってどんな雰囲気？」
+「実際の1日ってどんな感じ？」
+
+入社1年目の社員に1日密着してきました 📹</span>
+      <button class="more" onclick="toggleCaption('cap3')">...もっと見る</button>
+      <div class="caption-full" id="cap3">
+        <span class="text">
+8:00 出社
+8:10 朝礼・体操
+8:30 作業スタート
+12:00 お昼（食堂あり🍚）
+17:00 退社
+
+作業中の真剣な顔も、
+お昼の笑顔も、全部リアルです。
+
+「ここで働くイメージ」
+持ってもらえたら嬉しいです ✨
+
+気になったらまず見学から 👆
+プロフィールのリンクからどうぞ！</span>
+        <div class="tags">
+#高卒採用 #工場勤務 #ものづくり #自動車部品 #1日密着 #社員密着 #宮城求人 #大崎市 #東北就職 #アイシングループ #アイシン高丘東北 #AT_T新人の1日 #AT_T #新卒採用 #高校生就活
+        </div>
+      </div>
+    </div>
+
+    <div class="post-info">
+      <div class="info-card"><div class="label">役割</div><div class="value">リアル提示で背中押し</div></div>
+      <div class="info-card"><div class="label">形式</div><div class="value">Reels / Shorts 60秒</div></div>
+      <div class="info-card"><div class="label">KPI</div><div class="value">視聴維持率 / 完了率 / フォロー転換</div></div>
+    </div>
+  </div>
+
+  <div class="note-bar">
+    <strong>※ 注意：</strong>数字（残業15h・有給78%・研修3ヶ月）は仮値です。貴社から回答いただき次第、差し替えます。写真はAI生成によるイメージです。実際の投稿では現地撮影写真を使用します。
+  </div>
+</div>
+
+<script>
+const carouselState = {};
+
+function moveCarousel(id, dir) {
+  if (!carouselState[id]) carouselState[id] = 0;
+  const track = document.querySelector('#' + id + ' .carousel-track');
+  const imgs = track.querySelectorAll('img');
+  const total = imgs.length;
+
+  carouselState[id] += dir;
+  if (carouselState[id] < 0) carouselState[id] = 0;
+  if (carouselState[id] >= total) carouselState[id] = total - 1;
+
+  const pct = -(carouselState[id] * 100);
+  track.style.transform = 'translateX(' + pct + '%)';
+
+  // dots
+  const dotsId = id.replace('carousel', 'dots');
+  const dots = document.querySelectorAll('#' + dotsId + ' .carousel-dot');
+  dots.forEach((d, i) => d.classList.toggle('active', i === carouselState[id]));
+}
+
+function toggleCaption(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+  const btn = el.previousElementSibling;
+  btn.style.display = el.classList.contains('show') ? 'none' : '';
+}
+</script>
+
+</body>
+</html>
