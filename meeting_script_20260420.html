@@ -213,6 +213,90 @@
     color: #fff; font-weight: 900; font-size: 14px;
   }
 
+  /* DEEP DIVE TABLE */
+  .deep-table {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    background: #fff; border-radius: 14px; overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+    margin: 18px 0;
+  }
+  .deep-table th {
+    background: #1B5E20; color: #fff;
+    font-size: 14px; font-weight: 900;
+    padding: 12px 14px; text-align: left;
+    letter-spacing: 1px;
+  }
+  .deep-table th:first-child { width: 110px; }
+  .deep-table th:nth-child(2) { width: 220px; }
+  .deep-table td {
+    padding: 14px; font-size: 15px;
+    border-bottom: 1px solid #F0F0F0;
+    vertical-align: top; line-height: 1.7;
+  }
+  .deep-table tr:last-child td { border-bottom: none; }
+  .deep-table td:first-child {
+    font-weight: 900; color: #1B5E20;
+    background: #F1F8E9;
+    text-align: center;
+  }
+  .deep-table td:nth-child(2) { font-weight: 700; color: #1B3A1B; }
+  .deep-table td b {
+    background: linear-gradient(transparent 55%, #FFF59D 55%);
+    padding: 0 2px;
+  }
+
+  /* POINT CARDS */
+  .point-grid {
+    display: grid; grid-template-columns: 1fr; gap: 14px;
+    margin: 18px 0;
+  }
+  .point-card {
+    background: linear-gradient(135deg, #F1F8E9 0%, #fff 60%);
+    border-radius: 16px; padding: 22px 26px;
+    border-left: 8px solid #FFD600;
+    position: relative;
+  }
+  .point-card .point-num {
+    position: absolute; top: -14px; left: 18px;
+    background: #FFD600; color: #1B3A1B;
+    font-size: 16px; font-weight: 900;
+    padding: 4px 14px; border-radius: 20px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+    letter-spacing: 1px;
+  }
+  .point-card h4 {
+    font-size: 19px; font-weight: 900; color: #1B3A1B;
+    margin-bottom: 8px; margin-top: 4px;
+  }
+  .point-card p {
+    font-size: 15px; color: #444; line-height: 1.75;
+  }
+  .point-card p b {
+    color: #1B5E20;
+    background: linear-gradient(transparent 55%, #FFF59D 55%);
+    padding: 0 2px;
+  }
+  .num-chips {
+    display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0;
+  }
+  .num-chip {
+    background: #FFD600; color: #1B3A1B;
+    font-size: 14px; font-weight: 900;
+    padding: 5px 12px; border-radius: 20px;
+  }
+
+  /* WARNING BOX */
+  .warning {
+    background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+    border-left: 8px solid #C62828;
+    border-radius: 12px; padding: 20px 26px;
+    margin: 18px 0; font-size: 15px; line-height: 1.75;
+  }
+  .warning::before {
+    content: "⚠️ "; font-size: 18px; margin-right: 4px;
+  }
+  .warning b { color: #B71C1C; }
+
   /* FOOTER */
   .footer {
     text-align: center; margin-top: 40px;
@@ -329,6 +413,89 @@
     <span class="stage">⑩に移動、1枚ずつスワイプしながら説明</span>
     <div class="callout">
       <b>【ここで確認依頼】</b>この中の数字——<b>年間休日121日・食堂1食300円・独身寮月1万円台・賞与年2回</b>——は一般相場の仮値です。投稿前に貴社の実データで差し替えたいので、<b>4月24日の素材締切まで</b>に数値を共有ください。
+    </div>
+  </div>
+
+  <!-- SECTION 3-DEEP: ⑩深掘り -->
+  <div class="section" style="border-left-color: #FFD600;">
+    <span class="time-badge" style="background:#F9A825; color:#1B3A1B;">⑩ DEEP DIVE</span>
+    <h2><span class="num">📘</span>静止画⑩ 設計意図の深掘り <span style="font-size:13px; color:#888; font-weight:400;">（必要に応じて会議中に展開）</span></h2>
+
+    <h3>🎯 コンセプト：保存される「情報まとめ投稿」</h3>
+    <div class="dialog">
+      この1本だけは<strong>バズらせる投稿</strong>ではなく、<em>保存してもらう投稿</em>として設計しています。<br><br>
+      求職者が応募前に親や家族に「ここ、こういう会社なんだよ」と見せる——<strong>意思決定の後押し資料</strong>です。
+    </div>
+
+    <h3>📐 6枚の構成と、それぞれの仕掛け</h3>
+    <table class="deep-table">
+      <thead>
+        <tr><th>枚数</th><th>タイトル</th><th>仕掛け</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>① 表紙</td>
+          <td>福利厚生、<b>ぜんぶ</b>見せます</td>
+          <td>「ぜんぶ」で<b>透明性</b>をアピール／<b>16項目</b>という数字で信頼感を演出</td>
+        </tr>
+        <tr>
+          <td>② 食事・服装</td>
+          <td>会社が<b>ちゃんと</b>面倒見ます</td>
+          <td>毎日発生するコスト（昼食・作業服）を<b>ゼロ化</b>して生活実感に訴える</td>
+        </tr>
+        <tr>
+          <td>③ 住まい・通勤</td>
+          <td>一人暮らしでも、家族でも、安心</td>
+          <td><b>独身／家族の両ペルソナを同時回収</b>。地方勤務の余裕を強調</td>
+        </tr>
+        <tr>
+          <td>④ お金</td>
+          <td>がんばりは、ちゃんと給料に</td>
+          <td>賞与・昇給に加えて<b>資格取得支援</b>で「成長しながら稼げる」を明示</td>
+        </tr>
+        <tr>
+          <td>⑤ 休み</td>
+          <td>しっかり休んで、また走る</td>
+          <td>年休日数＋特別休暇リストで<b>働き方の余白</b>をビジュアル化</td>
+        </tr>
+        <tr>
+          <td>⑥ CTA</td>
+          <td>全部そろってる会社、意外と少ない。</td>
+          <td><b>他社比較せず、自社網羅性で勝負</b>する強気コピー</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>💡 特に推したい3つの設計ポイント</h3>
+    <div class="point-grid">
+      <div class="point-card">
+        <span class="point-num">POINT 1</span>
+        <h4>「生活4大要素」で網羅感を作った</h4>
+        <p>食事・住まい・お金・休み——求職者が気にする順に並べた。<br><b>この4つが揃っていない競合は実は多い</b>ので、並べるだけで差別化になる。</p>
+      </div>
+      <div class="point-card">
+        <span class="point-num">POINT 2</span>
+        <h4>数字を必ず入れた</h4>
+        <p>抽象語（充実／安心／しっかり）だけだと信じてもらえない。<b>実数値をハイライトバッジで強調</b>することで説得力が一気に上がる。</p>
+        <div class="num-chips">
+          <span class="num-chip">食堂 300円〜</span>
+          <span class="num-chip">独身寮 月1万円台〜</span>
+          <span class="num-chip">賞与 年2回</span>
+          <span class="num-chip">年休 121日</span>
+        </div>
+      </div>
+      <div class="point-card">
+        <span class="point-num">POINT 3</span>
+        <h4>最後のコピーが"勝ち筋"</h4>
+        <p>『<b>全部そろってる会社、意外と少ない。</b>』<br>他社の悪口を言わずに「全部あるのって実はレアだよ？」と気づかせる構造。<b>親世代にも刺さるトーン</b>に設計した。</p>
+      </div>
+    </div>
+
+    <h3>⚠️ 会議で必ず伝えるべき注意点</h3>
+    <div class="warning">
+      <b>数字はすべて仮値です。</b>4月24日までに貴社実データで差し替えが必要。<br>
+      特に <b>年休日数</b> と <b>賞与月数</b> は求職者が他社と必ず比較する指標なので、<b>正確な数字でないと逆効果</b>になる。<br>
+      会議中に「ここ重要です」と念押しをお忘れなく。
     </div>
   </div>
 
