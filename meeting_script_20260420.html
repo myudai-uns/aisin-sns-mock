@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>会議スクリプト｜静止画モックお披露目 2026-04-20</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif;
+    background: #f5f3ec;
+    color: #1B3A1B;
+    line-height: 1.75;
+    padding: 40px 20px 80px;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 60%, #43A047 100%);
+    color: #fff; border-radius: 24px; padding: 40px 48px;
+    box-shadow: 0 10px 30px rgba(27,94,32,0.25);
+    position: relative; overflow: hidden;
+  }
+  .header::after {
+    content: "AT-T"; position: absolute; top: 20px; right: 32px;
+    font-size: 22px; font-weight: 900; letter-spacing: 3px;
+    color: rgba(255,255,255,0.4);
+  }
+  .header .eyebrow {
+    display: inline-block; background: #FFD600; color: #1B3A1B;
+    font-size: 14px; font-weight: 900; padding: 4px 14px;
+    border-radius: 30px; margin-bottom: 16px; letter-spacing: 2px;
+  }
+  .header h1 { font-size: 40px; font-weight: 900; line-height: 1.3; margin-bottom: 14px; }
+  .header .meta {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    font-size: 15px; color: rgba(255,255,255,0.9);
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 14px; margin-top: 18px;
+  }
+  .header .meta b { color: #FFD600; margin-right: 6px; }
+  .header .url {
+    display: inline-block; background: rgba(255,255,255,0.15);
+    padding: 10px 18px; border-radius: 10px;
+    font-family: monospace; font-size: 14px;
+    margin-top: 12px; color: #FFD600; word-break: break-all;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .header .url::before { content: "🔗  "; }
+
+  /* SECTION */
+  .section {
+    background: #fff; border-radius: 20px;
+    padding: 36px 40px; margin-top: 28px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    border-left: 10px solid #43A047;
+    position: relative;
+  }
+  .time-badge {
+    position: absolute; top: -14px; left: 28px;
+    background: #1B5E20; color: #fff;
+    font-size: 14px; font-weight: 900; padding: 6px 16px;
+    border-radius: 30px; letter-spacing: 1px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  }
+  .section h2 {
+    font-size: 28px; font-weight: 900; color: #1B3A1B;
+    margin-bottom: 20px; padding-bottom: 12px;
+    border-bottom: 3px dotted #C8E6C9;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section h2 .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; background: #FFD600; color: #1B3A1B;
+    border-radius: 50%; font-size: 20px; font-weight: 900;
+  }
+  .section h3 {
+    font-size: 22px; font-weight: 900; color: #1B5E20;
+    margin: 24px 0 14px;
+    padding: 10px 16px;
+    background: linear-gradient(90deg, #E8F5E9, transparent);
+    border-left: 6px solid #FFD600;
+  }
+
+  /* DIALOG BLOCK */
+  .dialog {
+    background: #FFFDF5; border-radius: 14px;
+    padding: 22px 26px 22px 30px;
+    margin: 16px 0;
+    position: relative;
+    border-left: 4px solid #1B5E20;
+    font-size: 17px; line-height: 1.85;
+  }
+  .dialog::before {
+    content: "🎤"; position: absolute; top: -10px; left: -16px;
+    background: #FFD600; width: 38px; height: 38px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  }
+  .dialog strong { color: #1B5E20; }
+  .dialog em {
+    font-style: normal;
+    background: linear-gradient(transparent 55%, #FFF59D 55%);
+    padding: 0 3px; font-weight: 700;
+  }
+
+  /* STAGE DIRECTION */
+  .stage {
+    display: inline-block;
+    background: #E3F2FD; color: #0D47A1;
+    font-size: 14px; font-weight: 700;
+    padding: 6px 14px; border-radius: 20px;
+    margin: 6px 0; border: 1px dashed #90CAF9;
+  }
+  .stage::before { content: "▸ "; color: #1565C0; }
+
+  /* CHECK LIST */
+  .check-list { list-style: none; margin: 14px 0; }
+  .check-list li {
+    padding: 12px 16px 12px 44px;
+    background: #fff; margin-bottom: 8px;
+    border-radius: 10px;
+    border: 2px solid #E8F5E9;
+    position: relative; font-size: 16px;
+  }
+  .check-list li::before {
+    content: "✓"; position: absolute; left: 14px; top: 12px;
+    width: 22px; height: 22px; background: #43A047; color: #fff;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900;
+  }
+  .check-list li b { color: #1B5E20; }
+
+  /* PRIORITY BADGES */
+  .priority {
+    display: inline-block; font-size: 12px; font-weight: 900;
+    padding: 3px 10px; border-radius: 20px;
+    margin-right: 6px; letter-spacing: 1px;
+  }
+  .priority.p1 { background: #C62828; color: #fff; }
+  .priority.p2 { background: #F57C00; color: #fff; }
+  .priority.p3 { background: #1976D2; color: #fff; }
+
+  /* ACCENT CALLOUT */
+  .callout {
+    background: linear-gradient(135deg, #FFF9C4, #FFECB3);
+    border-left: 8px solid #FFA000;
+    border-radius: 12px; padding: 18px 24px;
+    margin: 16px 0; font-size: 16px;
+  }
+  .callout::before {
+    content: "⚡ "; font-size: 20px; margin-right: 4px;
+  }
+  .callout b { color: #E65100; }
+
+  /* QA BLOCK */
+  .qa-item {
+    background: #FAFAFA; border-radius: 12px;
+    padding: 18px 22px; margin-bottom: 12px;
+    border: 1px solid #E0E0E0;
+  }
+  .qa-item .q {
+    font-weight: 900; color: #1B3A1B; font-size: 17px;
+    margin-bottom: 8px; display: flex; align-items: flex-start; gap: 8px;
+  }
+  .qa-item .q::before {
+    content: "Q"; background: #1B5E20; color: #fff;
+    width: 26px; height: 26px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0;
+  }
+  .qa-item .a {
+    font-size: 15px; color: #444; line-height: 1.75;
+    padding-left: 34px; position: relative;
+  }
+  .qa-item .a::before {
+    content: "A"; background: #FFD600; color: #1B3A1B;
+    width: 26px; height: 26px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900;
+    position: absolute; left: 0; top: 0;
+  }
+
+  /* AGENDA TABLE */
+  .agenda {
+    background: #fff; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    margin: 20px 0;
+  }
+  .agenda-row {
+    display: grid; grid-template-columns: 110px 1fr 100px;
+    padding: 14px 20px; align-items: center;
+    border-bottom: 1px solid #F0F0F0;
+    font-size: 15px;
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row .time {
+    font-family: monospace; font-weight: 900; color: #1B5E20;
+    font-size: 16px;
+  }
+  .agenda-row .topic { color: #333; }
+  .agenda-row .minutes {
+    text-align: right; font-size: 13px; color: #888;
+    font-weight: 700;
+  }
+  .agenda-row.header-row {
+    background: #1B5E20; color: #fff;
+  }
+  .agenda-row.header-row .time,
+  .agenda-row.header-row .topic,
+  .agenda-row.header-row .minutes {
+    color: #fff; font-weight: 900; font-size: 14px;
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center; margin-top: 40px;
+    padding: 24px; color: #888; font-size: 13px;
+  }
+  .footer .sig {
+    display: inline-block; background: #fff;
+    padding: 10px 24px; border-radius: 30px;
+    color: #1B5E20; font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .section { page-break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+    .header { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <span class="eyebrow">MEETING SCRIPT</span>
+    <h1>静止画モック お披露目会議<br>進行台本</h1>
+    <div class="meta">
+      <div><b>日付：</b>2026年4月20日</div>
+      <div><b>対象：</b>アイシン高丘東北 橋元様・佐々木様</div>
+      <div><b>目安：</b>15〜20分</div>
+    </div>
+    <div class="url">https://myudai-uns.github.io/aisin-sns-mock/</div>
+  </div>
+
+  <!-- AGENDA OVERVIEW -->
+  <div class="section" style="border-left-color: #FFD600; margin-top: 40px;">
+    <span class="time-badge" style="background:#F9A825;">AGENDA</span>
+    <h2><span class="num">📋</span>本日の進め方</h2>
+    <div class="agenda">
+      <div class="agenda-row header-row">
+        <span class="time">時間</span>
+        <span class="topic">内容</span>
+        <span class="minutes">配分</span>
+      </div>
+      <div class="agenda-row">
+        <span class="time">0:00–1:00</span>
+        <span class="topic">オープニング・進め方アナウンス</span>
+        <span class="minutes">1分</span>
+      </div>
+      <div class="agenda-row">
+        <span class="time">1:00–4:00</span>
+        <span class="topic">静止画10本の全体像を俯瞰</span>
+        <span class="minutes">3分</span>
+      </div>
+      <div class="agenda-row">
+        <span class="time">4:00–14:00</span>
+        <span class="topic">ピックアップ3本デモ（⑩→⑥→⑦）</span>
+        <span class="minutes">10分</span>
+      </div>
+      <div class="agenda-row">
+        <span class="time">14:00–19:00</span>
+        <span class="topic">貴社へのお願い事項3点</span>
+        <span class="minutes">5分</span>
+      </div>
+      <div class="agenda-row">
+        <span class="time">19:00–20:00</span>
+        <span class="topic">クロージング・次回予告</span>
+        <span class="minutes">1分</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: OPENING -->
+  <div class="section">
+    <span class="time-badge">00:00 — 01:00</span>
+    <h2><span class="num">1</span>オープニング</h2>
+    <div class="dialog">
+      本日はお時間いただきありがとうございます。<br>
+      本日は、5月〜6月に投稿予定のInstagram静止画、<strong>全10本のモックアップ</strong>が揃いましたので、一度ご覧いただきながら方向性のすり合わせをさせてください。<br><br>
+      <em>進め方としては、</em>最初に全体像を3分、次に注目してほしい3本をピックアップで10分、最後に貴社から回収したい情報を5分、という流れで進めさせてください。
+    </div>
+    <span class="stage">画面共有：GitHub Pages URLを開く</span>
+  </div>
+
+  <!-- SECTION 2: OVERVIEW -->
+  <div class="section">
+    <span class="time-badge">01:00 — 04:00</span>
+    <h2><span class="num">2</span>全体像の共有</h2>
+    <div class="dialog">
+      こちらが、制作中のモック一覧になります。<br>
+      スクロールすると、<strong>投稿1から投稿13まで、時系列に並んでいます</strong>。<br><br>
+      <em>5月の投稿</em>は、採用Q&A・職種理解・新人密着動画の<strong>ローンチ3本</strong>が中心。<br>
+      <em>6月の投稿</em>は、宮城で暮らす・製造業の誤解・職種別紹介・キャリアステップ・福利厚生、と<strong>深掘りフェーズ</strong>に入ります。<br><br>
+      今日お見せするのは、すべて<strong>左右にスワイプで動くカルーセル形式</strong>。実際のInstagram投稿と同じ見え方で確認できます。
+    </div>
+    <span class="stage">デモ：1枚スワイプして見せる</span>
+    <div class="callout">
+      写真は現時点では<b>AI生成のイメージ画像</b>です。<b>5月11日の撮影日</b>に実写へ差し替える前提で、レイアウトとコピーの方向性を固めるためのモックとしてご覧ください。
+    </div>
+  </div>
+
+  <!-- SECTION 3: PICK 1 -->
+  <div class="section">
+    <span class="time-badge">04:00 — 07:00</span>
+    <h2><span class="num">3</span>ピックアップ① 静止画⑩「福利厚生ぜんぶ見せます」</h2>
+    <h3>🏆 本日のイチ推し／6月11日投稿予定／全ペルソナ向け</h3>
+    <div class="dialog">
+      まずはこちら、<strong>全ペルソナに効く一本</strong>として、福利厚生のまとめ投稿です。<br><br>
+      表紙は『<em>16項目ぜんぶ公開</em>』とフックを置いて、続けて<strong>食事・住まい・お金・休み</strong>の4カテゴリを1枚ずつ。<br><br>
+      最後のコピーは『<em>全部そろってる会社、意外と少ない。</em>』——<br>
+      他社比較ではなく、<strong>自社の網羅性で勝負する</strong>構成にしています。<br><br>
+      保存される投稿設計なので、<em>求職者が親や家族に見せる用</em>として効いてくるはずです。
+    </div>
+    <span class="stage">⑩に移動、1枚ずつスワイプしながら説明</span>
+    <div class="callout">
+      <b>【ここで確認依頼】</b>この中の数字——<b>年間休日121日・食堂1食300円・独身寮月1万円台・賞与年2回</b>——は一般相場の仮値です。投稿前に貴社の実データで差し替えたいので、<b>4月24日の素材締切まで</b>に数値を共有ください。
+    </div>
+  </div>
+
+  <!-- SECTION 4: PICK 2 -->
+  <div class="section">
+    <span class="time-badge">07:00 — 10:30</span>
+    <h2><span class="num">4</span>ピックアップ② 静止画⑥「製造業の誤解、解きます」</h2>
+    <h3>🏭 高卒採用向け／5月24日投稿予定</h3>
+    <div class="dialog">
+      次に、高卒採用に刺さる一本を。<br><br>
+      製造業に対する<strong>3つの誤解</strong>——きつい／汚い／未経験NG——を<strong>Before/After形式</strong>で1枚ずつ解いていく構成です。<br><br>
+      赤いスタンプで『<em>それ、昭和。</em>』と入れているのがポイント。高校生や保護者に『今の工場は違うんだ』と<strong>一瞬で伝わる設計</strong>です。<br><br>
+      最後は『AT-Tのブレーキ部品が、あなたの家族の命を守っています』で着地。<strong>仕事の意義</strong>まで繋げる流れにしています。
+    </div>
+    <span class="stage">⑥に移動、Before/Afterのめくりを強調</span>
+  </div>
+
+  <!-- SECTION 5: PICK 3 -->
+  <div class="section">
+    <span class="time-badge">10:30 — 14:00</span>
+    <h2><span class="num">5</span>ピックアップ③ 静止画⑦「生産技術職、実際どう？」</h2>
+    <h3>🔧 中途採用（技術）向け／6月2日投稿予定</h3>
+    <div class="dialog">
+      中途採用向けの深掘りも1本ご覧ください。<br><br>
+      ここは<strong>裁量と設備投資</strong>をキーワードに、大手他社との<em>自律性比較をバーチャート</em>で表現しています。<br><br>
+      『<strong>決裁が通るスピード</strong>』『<strong>改善提案の採用率</strong>』——数字でエンジニアの心を掴みにいく構成です。<br><br>
+      中途のエンジニア転職者は『<em>自分の手で何が動かせるか</em>』を気にするので、ここが他社との差別化ポイントになります。
+    </div>
+    <span class="stage">⑦に移動、バーチャートを中心に見せる</span>
+  </div>
+
+  <!-- SECTION 6: REQUESTS -->
+  <div class="section" style="border-left-color: #C62828;">
+    <span class="time-badge" style="background:#C62828;">14:00 — 19:00</span>
+    <h2><span class="num">6</span>貴社へのお願い事項 <span style="font-size:14px; color:#888; font-weight:400;">（3点）</span></h2>
+
+    <h3><span class="priority p1">最優先</span> ① 福利厚生の実数値（4/24まで）</h3>
+    <ul class="check-list">
+      <li><b>年間休日</b>（カレンダー）</li>
+      <li><b>社員食堂の価格帯</b></li>
+      <li><b>独身寮・住宅手当の実額</b></li>
+      <li><b>賞与の月数</b>（公開可能な範囲で）</li>
+    </ul>
+
+    <h3><span class="priority p2">進捗確認</span> ② Instagram公式アカウント開設状況</h3>
+    <div class="dialog">
+      4月10日に開設手順をお送りしましたが、進捗はいかがでしょうか。<br>
+      <em>5月12日の初回投稿に間に合わせるには、連休明けまでにアカウント有効化</em>が必要です。
+    </div>
+
+    <h3><span class="priority p3">撮影準備</span> ③ 5月11日撮影に向けて</h3>
+    <ul class="check-list">
+      <li><b>顔出し可能な社員リスト</b></li>
+      <li><b>NG箇所</b>（機密図面・特定設備）の事前確認</li>
+      <li><b>撮影当日の案内担当者</b></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 7: CLOSING -->
+  <div class="section">
+    <span class="time-badge">19:00 — 20:00</span>
+    <h2><span class="num">7</span>クロージング</h2>
+    <div class="dialog">
+      本日ご覧いただいた10本は、あくまで<strong>方向性確認のモック</strong>です。<br><br>
+      本日のフィードバックを踏まえて、<em>4月28日のレビュー①</em>で静止画①（採用Q&A）の本番データ反映版をお送りします。<br><br>
+      今月中にご質問・ご指摘があれば、いつでもSlackまたはメールでお知らせください。<br>
+      本日はありがとうございました。
+    </div>
+  </div>
+
+  <!-- SECTION 8: Q&A -->
+  <div class="section" style="border-left-color: #1976D2;">
+    <span class="time-badge" style="background:#1976D2;">BACKUP</span>
+    <h2><span class="num">❓</span>想定Q&Aと切り返し</h2>
+
+    <div class="qa-item">
+      <div class="q">写真はどうやって撮るの？</div>
+      <div class="a">5月11日の撮影日に、現場の写真と社員の方の手元・後ろ姿を中心に撮ります。顔出しは事前に同意いただいた方のみ。NGの場合は後ろ姿・マスク着用でも問題ない構成にしてあります。</div>
+    </div>
+
+    <div class="qa-item">
+      <div class="q">数字が違う場合どうする？</div>
+      <div class="a">モック上の数字はすべて<b>仮値</b>です。貴社実データをいただければ、投稿前に全て差し替えます。この場で合っているかどうかの判断は不要です。</div>
+    </div>
+
+    <div class="qa-item">
+      <div class="q">コピーがキツすぎないか？</div>
+      <div class="a">『それ、昭和。』のような強めのフックは、<b>スクロールを止めるため</b>の設計です。もし表現を和らげたほうが良ければ、『今はもう違います』などにトーン調整可能です。どのラインが貴社の許容範囲か、ぜひお教えください。</div>
+    </div>
+
+    <div class="qa-item">
+      <div class="q">この中で一番推したい1本は？</div>
+      <div class="a"><b>静止画⑩の福利厚生</b>です。保存されやすく、応募前の情報収集段階で効きます。採用サイトへ誘導する入口として最強の1本です。</div>
+    </div>
+  </div>
+
+  <!-- SECTION 9: FOLLOW-UP -->
+  <div class="section" style="border-left-color: #7B1FA2;">
+    <span class="time-badge" style="background:#7B1FA2;">AFTER</span>
+    <h2><span class="num">✉️</span>会議後のフォローアップ（当日中に送信）</h2>
+    <div class="callout" style="background: linear-gradient(135deg, #F3E5F5, #E1BEE7); border-left-color:#7B1FA2;">
+      <b>件名：</b>【AT-T】本日のお礼と、確認事項3点の再送
+    </div>
+    <ul class="check-list">
+      <li><b>共有URL</b>の再掲</li>
+      <li><b>確認依頼3点</b>（福利厚生数値／IG開設／撮影同意）</li>
+      <li><b>次回レビュー①予定日（4/28）</b>のリマインド</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <div class="sig">AT-T SNS採用コンテンツチーム｜出木杉</div>
+  </div>
+
+</div>
+</body>
+</html>
