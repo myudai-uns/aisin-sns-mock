@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>アイシン高丘東北 SNS投稿モック v6（①〜⑧統合版）</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Zen Maru Gothic", "Meiryo", sans-serif;
+    background: #fafafa; color: #262626;
+  }
+
+  .page-header {
+    background: linear-gradient(135deg, #1B5E20 0%, #43A047 100%);
+    color: #fff; padding: 36px 40px; text-align: center;
+  }
+  .page-header h1 { font-size: 26px; margin-bottom: 8px; font-weight: 900; }
+  .page-header p { font-size: 13px; opacity: 0.9; }
+  .page-header .badges {
+    margin-top: 14px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+  }
+  .page-header .badge {
+    background: rgba(255,214,0,0.95); color: #1B3A1B;
+    font-size: 12px; font-weight: 900;
+    padding: 5px 14px; border-radius: 20px;
+  }
+
+  .summary-bar {
+    max-width: 720px; margin: 24px auto 0; padding: 16px 20px;
+    background: #fff; border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    display: flex; justify-content: space-around; flex-wrap: wrap; gap: 16px;
+  }
+  .summary-bar .item { text-align: center; }
+  .summary-bar .num {
+    font-size: 28px; font-weight: 900; color: #1B5E20;
+  }
+  .summary-bar .lbl { font-size: 11px; color: #888; margin-top: 2px; }
+
+  .section {
+    max-width: 540px; margin: 32px auto 0; padding: 0 12px;
+  }
+  .section-label {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px; flex-wrap: wrap;
+  }
+  .section-badge {
+    background: #1B5E20; color: #fff; font-size: 11px; font-weight: 900;
+    padding: 5px 14px; border-radius: 20px;
+  }
+  .section-badge.new { background: #FFD600; color: #1B3A1B; }
+  .section-badge.video { background: #E53935; }
+  .section-title {
+    font-size: 17px; font-weight: 900; color: #1B5E20;
+  }
+
+  /* IG Post Frame */
+  .ig-post {
+    background: #fff; border: 1px solid #dbdbdb; border-radius: 12px;
+    overflow: hidden; margin-bottom: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .ig-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 14px;
+  }
+  .ig-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #1B5E20, #43A047);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 11px; font-weight: 900;
+    border: 2px solid #e8e8e8;
+  }
+  .ig-user-info { flex: 1; }
+  .ig-username { font-size: 13px; font-weight: 700; }
+  .ig-location { font-size: 11px; color: #8e8e8e; }
+  .ig-more { font-size: 18px; color: #262626; cursor: pointer; letter-spacing: 2px; }
+
+  /* Carousel */
+  .carousel-container { position: relative; background: #000; overflow: hidden; }
+  .carousel-track { display: flex; transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1); }
+  .carousel-track img { width: 100%; flex-shrink: 0; display: block; }
+  .carousel-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(255,255,255,0.9); border: none;
+    cursor: pointer; font-size: 12px; color: #333;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 10; opacity: 0.8; transition: opacity 0.2s;
+  }
+  .carousel-btn:hover { opacity: 1; }
+  .carousel-prev { left: 8px; }
+  .carousel-next { right: 8px; }
+  .carousel-counter {
+    position: absolute; top: 14px; right: 14px;
+    background: rgba(0,0,0,0.6); color: #fff;
+    font-size: 12px; font-weight: 600;
+    padding: 4px 10px; border-radius: 12px; z-index: 10;
+  }
+  .carousel-dots {
+    display: flex; justify-content: center; gap: 5px;
+    padding: 10px 0;
+  }
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #c7c7c7; transition: all 0.2s;
+  }
+  .dot.active { background: #1B5E20; width: 6px; }
+
+  /* Actions */
+  .ig-actions {
+    display: flex; align-items: center; padding: 8px 14px;
+  }
+  .ig-actions .left { display: flex; gap: 14px; flex: 1; }
+  .ig-btn {
+    font-size: 24px; cursor: pointer; background: none; border: none;
+    transition: transform 0.15s;
+  }
+  .ig-btn:active { transform: scale(1.2); }
+  .ig-likes {
+    padding: 0 14px 4px; font-size: 13px; font-weight: 700;
+  }
+
+  /* Caption */
+  .ig-caption {
+    padding: 0 14px 14px; font-size: 13px; line-height: 1.7;
+  }
+  .ig-caption .u { font-weight: 700; }
+  .ig-caption .txt { color: #262626; }
+  .ig-caption .more-btn {
+    color: #8e8e8e; cursor: pointer; background: none;
+    border: none; font-size: 13px; font-family: inherit;
+  }
+  .caption-expand { display: none; white-space: pre-line; }
+  .caption-expand.show { display: inline; }
+  .ig-caption .tags { color: #00376b; margin-top: 6px; display: block; font-size: 12px; line-height: 1.8; }
+  .ig-time-stamp {
+    padding: 0 14px 12px; font-size: 10px; color: #8e8e8e;
+    text-transform: uppercase;
+  }
+
+  /* Post meta */
+  .post-meta {
+    display: flex; gap: 0; border-top: 1px solid #efefef;
+  }
+  .meta-item {
+    flex: 1; text-align: center; padding: 12px 8px;
+    border-right: 1px solid #efefef;
+  }
+  .meta-item:last-child { border-right: none; }
+  .meta-label { font-size: 10px; color: #8e8e8e; margin-bottom: 3px; }
+  .meta-value { font-size: 13px; font-weight: 700; color: #1B5E20; }
+
+  /* Video */
+  .video-container {
+    position: relative; background: #111;
+    height: 600px; display: flex; align-items: center; justify-content: center;
+    color: #fff; text-align: center;
+  }
+  .video-container .v-icon { font-size: 60px; margin-bottom: 12px; opacity: 0.7; }
+  .video-container .v-note { font-size: 13px; opacity: 0.7; line-height: 1.7; }
+
+  /* Note */
+  .note-bar {
+    max-width: 540px; margin: 0 auto 30px;
+    background: #fff8e1; border-left: 4px solid #ffa000;
+    padding: 12px 16px; border-radius: 0 8px 8px 0;
+    font-size: 12px; color: #555; line-height: 1.7;
+  }
+
+  .divider {
+    max-width: 540px; margin: 32px auto;
+    border: none; border-top: 1px solid #dbdbdb;
+  }
+
+  .week-separator {
+    max-width: 720px; margin: 40px auto 20px; padding: 14px 24px;
+    background: linear-gradient(135deg, #1B5E20, #43A047);
+    color: #fff; border-radius: 12px; text-align: center;
+  }
+  .week-separator h2 { font-size: 18px; font-weight: 900; margin-bottom: 4px; }
+  .week-separator p { font-size: 12px; opacity: 0.9; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>アイシン高丘東北 SNS投稿モック</h1>
+  <p>5月〜6月の投稿予定コンテンツ一覧｜制作：Unsee</p>
+  <div class="badges">
+    <div class="badge">静止画 10本</div>
+    <div class="badge">動画 企画中</div>
+    <div class="badge">2026-04-21</div>
+  </div>
+</div>
+
+<!-- ======== Week 1 ======== -->
+<div class="week-separator">
+  <h2>Week 1「出会い」（5/12〜）</h2>
+  <p>保存される投稿で初期フォロワー獲得</p>
+</div>
+
+<!-- 投稿1: 静止画① 採用Q&A -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-badge">投稿1 / 5月12日(月)</span>
+    <span class="section-title">静止画① 採用Q&A</span>
+  </div>
+  <div class="ig-post">
+    <div class="ig-header">
+      <div class="ig-avatar">AT</div>
+      <div class="ig-user-info"><div class="ig-username">aisin_takaoka_tohoku</div><div class="ig-location">宮城県大崎市</div></div>
+      <div class="ig-more">•••</div>
+    </div>
+    <div class="carousel-container" data-carousel="c1">
+      <div class="carousel-track">
+        <img src="final_mock_v4/v4_static01_01_cover.png">
+        <img src="final_mock_v4/v4_static01_02_overtime.png">
+        <img src="final_mock_v4/v4_static01_03_paid_leave.png">
+        <img src="final_mock_v4/v4_static01_04_beginner.png">
+        <img src="final_mock_v4/v4_static01_05_assignment.png">
+        <img src="final_mock_v4/v4_static01_06_cta.png">
+      </div>
+      <button class="carousel-btn carousel-prev" onclick="move('c1',-1)">◀</button>
+      <button class="carousel-btn carousel-next" onclick="move('c1',1)">▶</button>
+      <div class="carousel-counter" data-counter="c1">1 / 6</div>
+    </div>
+    <div class="carousel-dots" data-dots="c1">
+      <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="ig-actions">
+      <div class="left"><button class="ig-btn">♡</button><button class="ig-btn">💬</button><button class="ig-btn">↗️</button></div>
+      <button class="ig-btn">🔖</button>
+    </div>
+    <div class="ig-likes">128 いいね</div>
+    <div class="ig-caption">
+      <span class="u">aisin_takaoka_tohoku</span>
+      <span class="txt"> 【よく聞かれる質問、正直に答えます📊】
+
+残業・有給・未経験・配属──就活中に気になる4つの疑問、トヨタ系・アイシングループの自動車部品メーカーが正直に答えます。</span>
+      <span class="tags">#AT_T質問箱 #高卒採用 #アイシン高丘東北 #宮城就職</span>
+    </div>
+    <div class="ig-time-stamp">5月12日 18:00</div>
+    <div class="post-meta">
+      <div class="meta-item"><div class="meta-label">ターゲット</div><div class="meta-value">高卒</div></div>
+      <div class="meta-item"><div class="meta-label">形式</div><div class="meta-value">カルーセル 6枚</div></div>
+      <div class="meta-item"><div class="meta-label">KPI</div><div class="meta-value">保存 / リーチ</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 投稿2: 静止画② 製造職の仕事 -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-badge">投稿2 / 5月14日(水)</span>
+    <span class="section-title">静止画② 製造職の仕事</span>
+  </div>
+  <div class="ig-post">
+    <div class="ig-header">
+      <div class="ig-avatar">AT</div>
+      <div class="ig-user-info"><div class="ig-username">aisin_takaoka_tohoku</div><div class="ig-location">宮城県大崎市</div></div>
+      <div class="ig-more">•••</div>
+    </div>
+    <div class="carousel-container" data-carousel="c2">
+      <div class="carousel-track">
+        <img src="final_mock_v4/v4_static02_01_cover.png">
+        <img src="mock_images/static02_02_mission.png">
+        <img src="final_mock_v4/v4_static02_03_jobs.png">
+        <img src="final_mock_v4/v4_static02_04_timeline.png">
+        <img src="mock_images/static02_05_fit_cta.png">
+      </div>
+      <button class="carousel-btn carousel-prev" onclick="move('c2',-1)">◀</button>
+      <button class="carousel-btn carousel-next" onclick="move('c2',1)">▶</button>
+      <div class="carousel-counter" data-counter="c2">1 / 5</div>
+    </div>
+    <div class="carousel-dots" data-dots="c2">
+      <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="ig-actions">
+      <div class="left"><button class="ig-btn">♡</button><button class="ig-btn">💬</button><button class="ig-btn">↗️</button></div>
+      <button class="ig-btn">🔖</button>
+    </div>
+    <div class="ig-likes">94 いいね</div>
+    <div class="ig-caption">
+      <span class="u">aisin_takaoka_tohoku</span>
+      <span class="txt"> 【製造のお仕事って何するの？🔧】
+
+ブレーキ部品で命を守る仕事。高卒1年目から活躍中。</span>
+      <span class="tags">#AT_Tの仕事図鑑 #高卒採用 #アイシン高丘東北</span>
+    </div>
+    <div class="ig-time-stamp">5月14日 18:00</div>
+    <div class="post-meta">
+      <div class="meta-item"><div class="meta-label">ターゲット</div><div class="meta-value">高卒</div></div>
+      <div class="meta-item"><div class="meta-label">形式</div><div class="meta-value">カルーセル 5枚</div></div>
+      <div class="meta-item"><div class="meta-label">KPI</div><div class="meta-value">保存 / 滞在時間</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 投稿3: 動画① 新人の1日密着（プレースホルダー） -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-badge video">投稿3 / 5月16日(金)</span>
+    <span class="section-title">動画① 新人の1日密着（制作予定）</span>
+  </div>
+  <div class="ig-post">
+    <div class="ig-header">
+      <div class="ig-avatar">AT</div>
+      <div class="ig-user-info"><div class="ig-username">aisin_takaoka_tohoku</div><div class="ig-location">宮城県大崎市</div></div>
+      <div class="ig-more">•••</div>
+    </div>
+    <div class="video-container">
+      <div>
+        <div class="v-icon">🎬</div>
+        <div class="v-note">
+          動画① 新人の1日密着（60秒）<br>
+          撮影：5月11日予定 / Reels + YouTube Shorts
+        </div>
+      </div>
+    </div>
+    <div class="ig-actions">
+      <div class="left"><button class="ig-btn">♡</button><button class="ig-btn">💬</button><button class="ig-btn">↗️</button></div>
+      <button class="ig-btn">🔖</button>
+    </div>
+    <div class="ig-likes">— —</div>
+    <div class="ig-caption">
+      <span class="u">aisin_takaoka_tohoku</span>
+      <span class="txt"> 【入社1年目、朝〜退社までぜんぶ見せます🎬】</span>
+      <span class="tags">#AT_T新人の1日 #高卒採用 #工場勤務</span>
+    </div>
+    <div class="ig-time-stamp">5月16日 19:00</div>
+    <div class="post-meta">
+      <div class="meta-item"><div class="meta-label">ターゲット</div><div class="meta-value">高卒</div></div>
+      <div class="meta-item"><div class="meta-label">形式</div><div class="meta-value">Reels 60秒</div></div>
+      <div class="meta-item"><div class="meta-label">KPI</div><div class="meta-value">視聴維持率</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== Week 2 ======== -->
+<div class="week-separator">
+  <h2>Week 2「共感」（5/19〜）</h2>
+  <p>人の顔が見える投稿で「いいかも」と思わせる</p>
+</div>
+
+<!-- 投稿4: 静止画③ 先輩のホンネ -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-badge">投稿4 / 5月19日(月)</span>
+    <span class="section-title">静止画③ 高卒で入った先輩のホンネ</span>
+  </div>
+  <div class="ig-post">
+    <div class="ig-header">
+      <div class="ig-avatar">AT</div>
+      <div class="ig-user-info"><div class="ig-username">aisin_takaoka_tohoku</div><div class="ig-location">宮城県大崎市</div></div>
+      <div class="ig-more">•••</div>
+    </div>
+    <div class="carousel-container" data-carousel="c3">
+      <div class="carousel-track">
+        <img src="final_static03/static03_01_cover.png">
+        <img src="final_static03/static03_02_profile.png">
+        <img src="final_static03/static03_03_reason.png">
+        <img src="final_static03/static03_04_anxiety.png">
+        <img src="final_static03/static03_05_now.png">
+        <img src="final_static03/static03_06_cta.png">
+      </div>
+      <button class="carousel-btn carousel-prev" onclick="move('c3',-1)">◀</button>
+      <button class="carousel-btn carousel-next" onclick="move('c3',1)">▶</button>
+      <div class="carousel-counter" data-counter="c3">1 / 6</div>
+    </div>
+    <div class="carousel-dots" data-dots="c3">
+      <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="ig-actions">
+      <div class="left"><button class="ig-btn">♡</button><button class="ig-btn">💬</button><button class="ig-btn">↗️</button></div>
+      <button class="ig-btn">🔖</button>
+    </div>
+    <div class="ig-likes">156 いいね</div>
+    <div class="ig-caption">
+      <span class="u">aisin_takaoka_tohoku</span>
+      <span class="txt"> 【高卒で入った先輩のホンネ💬】
+
+入社3年目のS.Tさんに、リアルな声を聞いてきました。</span>
+      <span class="tags">#AT_T先輩の声 #高卒採用 #工場勤務</span>
+    </div>
+    <div class="ig-time-stamp">5月19日 18:00</div>
+    <div class="post-meta">
+      <div class="meta-item"><div class="meta-label">ターゲット</div><div class="meta-value">高卒</div></div>
+      <div class="meta-item"><div class="meta-label">形式</div><div class="meta-value">カルーセル 6枚</div></div>
+      <div class="meta-item"><div class="meta-label">KPI</div><div class="meta-value">保存 / コメント</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 投稿5: 静止画④ 数字で見るAT-T -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-badge">投稿5 / 5月21日(水)</span>
+    <span class="section-title">静止画④ 数字で見るAT-T</span>
+  </div>
+  <div class="ig-post">
+    <div class="ig-header">
+      <div class="ig-avatar">AT</div>
+      <div class="ig-user-info"><div class="ig-username">aisin_takaoka_tohoku</div><div class="ig-location">宮城県大崎市</div></div>
+      <div class="ig-more">•••</div>
+    </div>
+    <div class="carousel-container" data-carousel="c4">
+      <div class="carousel-track">
+        <img src="final_static04/static04_01_cover.png">
+        <img src="final_static04/static04_02_scale.png">
+        <img src="final_static04/static04_03_holidays.png">
+        <img src="final_static04/static04_04_salary.png">
+        <img src="final_static04/static04_05_stability.png">
+        <img src="final_static04/static04_06_cta.png">
+      </div>
+      <button class="carousel-btn carousel-prev" onclick="move('c4',-1)">◀</button>
+      <button class="carousel-btn carousel-next" onclick="move('c4',1)">▶</button>
+      <div class="carousel-counter" data-counter="c4">1 / 6</div>
+    </div>
+    <div class="carousel-dots" data-dots="c4">
+      <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="ig-actions">
+      <div class="left"><button class="ig-btn">♡</button><button class="ig-btn">💬</button><button class="ig-btn">↗️</button></div>
+      <button class="ig-btn">🔖</button>
+    </div>
+    <div class="ig-likes">210 いいね</div>
+    <div class="ig-caption">
+      <span class="u">aisin_takaoka_tohoku</span>
+      <span class="txt"> 【数字で見るAT-T📊】
+
+「安定してるの？」を数字で証明します。<br>※数字は貴社回答後に差し替え</span>
+      <span class="tags">#AT_T質問箱 #アイシン高丘東北 #安定企業</span>
+    </div>
+    <div class="ig-time-stamp">5月21日 18:00</div>
+    <div class="post-meta">
+      <div class="meta-item"><div class="meta-label">ターゲット</div><div class="meta-value">全員</div></div>
+      <div class="meta-item"><div class="meta-label">形式</div><div class="meta-value">カルーセル 6枚</div></div>
+      <div class="meta-item"><div class="meta-label">KPI</div><div class="meta-value">保存 / リーチ</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 投稿6: 動画② 高卒3年目トーク（プレースホルダー） -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-badge video">投稿6 / 5月23日(金)</span>
+    <span class="section-title">動画② 高卒3年目のリアルトーク（制作予定）</span>
+  </div>
+  <div class="ig-post">
+    <div class="ig-header">
+      <div class="ig-avatar">AT</div>
+      <div class="ig-user-info"><div class="ig-username">aisin_takaoka_tohoku</div><div class="ig-location">宮城県大崎市</div></div>
+      <div class="ig-more">•••</div>
+    </div>
+    <div class="video-container">
+      <div>
+        <div class="v-icon">🎤</div>
+        <div class="v-note">
+          動画② 高卒3年目のリアルトーク（60秒）<br>
+          S.Tさん出演予定 / 撮影日調整中
+        </div>
+      </div>
+    </div>
+    <div class="ig-actions">
+      <div class="left"><button class="ig-btn">♡</button><button class="ig-btn">💬</button><button class="ig-btn">↗️</button></div>
+      <button class="ig-btn">🔖</button>
+    </div>
+    <div class="ig-likes">— —</div>
+    <div class="ig-caption">
+      <span class="u">aisin_takaoka_tohoku</span>
+      <span class="txt"> 【高卒で工場って実際どう？🎤】</span>
+      <span class="tags">#AT_T先輩の声 #高卒採用</span>
+    </div>
+    <div class="ig-time-stamp">5月23日 19:00</div>
+    <div class="post-meta">
+      <div class="meta-item"><div class="meta-label">ターゲット</div><div class="meta-value">高卒</div></div>
+      <div class="meta-item"><div class="meta-label">形式</div><div class="meta-value">Reels 60秒</div></div>
+      <div class="meta-item"><div class="meta-label">KPI</div><div class="meta-value">維持率 / コメント</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== Week 3 ======== -->
+<div class="week-separator">
+  <h2>Week 3「生活」（5/26〜）</h2>
+  <p>「ここで働く自分」をイメージさせる</p>
+</div>
+
+<!-- 投稿7: 静止画⑤ 宮城で暮らす -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-badge new">投稿7 / 5月26日(月) ★NEW</span>
+    <span class="section-title">静止画⑤ 宮城で暮らす、宮城で働く</span>
+  </div>
+  <div class="ig-post">
+    <div class="ig-header">
+      <div class="ig-avatar">AT</div>
+      <div class="ig-user-info"><div class="ig-username">aisin_takaoka_tohoku</div><div class="ig-location">宮城県大崎市</div></div>
+      <div class="ig-more">•••</div>
+    </div>
+    <div class="carousel-container" data-carousel="c5">
+      <div class="carousel-track">
+        <img src="final_static05/static05_01_cover.png">
+        <img src="final_static05/static05_02_rent.png">
+        <img src="final_static05/static05_03_commute.png">
+        <img src="final_static05/static05_04_holiday.png">
+        <img src="final_static05/static05_05_cta.png">
+      </div>
+      <button class="carousel-btn carousel-prev" onclick="move('c5',-1)">◀</button>
+      <button class="carousel-btn carousel-next" onclick="move('c5',1)">▶</button>
+      <div class="carousel-counter" data-counter="c5">1 / 5</div>
+    </div>
+    <div class="carousel-dots" data-dots="c5">
+      <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="ig-actions">
+      <div class="left"><button class="ig-btn">♡</button><button class="ig-btn">💬</button><button class="ig-btn">↗️</button></div>
+      <button class="ig-btn">🔖</button>
+    </div>
+    <div class="ig-likes">143 いいね</div>
+    <div class="ig-caption">
+      <span class="u">aisin_takaoka_tohoku</span>
+      <span class="txt"> 【宮城で暮らす、宮城で働く🌾】
+
+家賃・通勤・休日・転勤なし──大崎市のリアルな生活、数字で見せちゃいます。</span>
+      <span class="tags">#AT_Tの暮らし #地元就職 #宮城求人 #転勤なし #大崎市</span>
+    </div>
+    <div class="ig-time-stamp">5月26日 18:00</div>
+    <div class="post-meta">
+      <div class="meta-item"><div class="meta-label">ターゲット</div><div class="meta-value">新卒</div></div>
+      <div class="meta-item"><div class="meta-label">形式</div><div class="meta-value">カルーセル 5枚</div></div>
+      <div class="meta-item"><div class="meta-label">KPI</div><div class="meta-value">保存 / プロフ遷移</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 投稿8: 静止画⑥ 製造業の誤解 -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-badge new">投稿8 / 5月28日(水) ★NEW</span>
+    <span class="section-title">静止画⑥ 製造業の誤解、ぶっちゃけ違います</span>
+  </div>
+  <div class="ig-post">
+    <div class="ig-header">
+      <div class="ig-avatar">AT</div>
+      <div class="ig-user-info"><div class="ig-username">aisin_takaoka_tohoku</div><div class="ig-location">宮城県大崎市</div></div>
+      <div class="ig-more">•••</div>
+    </div>
+    <div class="carousel-container" data-carousel="c6">
+      <div class="carousel-track">
+        <img src="final_static06/static06_01_cover.png">
+        <img src="final_static06/static06_02_myth1_tough.png">
+        <img src="final_static06/static06_03_myth2_dirty.png">
+        <img src="final_static06/static06_04_myth3_simple.png">
+        <img src="final_static06/static06_05_result.png">
+        <img src="final_static06/static06_06_cta.png">
+      </div>
+      <button class="carousel-btn carousel-prev" onclick="move('c6',-1)">◀</button>
+      <button class="carousel-btn carousel-next" onclick="move('c6',1)">▶</button>
+      <div class="carousel-counter" data-counter="c6">1 / 6</div>
+    </div>
+    <div class="carousel-dots" data-dots="c6">
+      <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="ig-actions">
+      <div class="left"><button class="ig-btn">♡</button><button class="ig-btn">💬</button><button class="ig-btn">↗️</button></div>
+      <button class="ig-btn">🔖</button>
+    </div>
+    <div class="ig-likes">178 いいね</div>
+    <div class="ig-caption">
+      <span class="u">aisin_takaoka_tohoku</span>
+      <span class="txt"> 【製造業のイメージ、ぶっちゃけ違います🏭】
+
+「きつい・汚い・単純作業」の3K、いまの工場はどう？正直に見せます。</span>
+      <span class="tags">#AT_T質問箱 #3K #製造業の本音 #工場見学 #シェア歓迎</span>
+    </div>
+    <div class="ig-time-stamp">5月28日 18:00</div>
+    <div class="post-meta">
+      <div class="meta-item"><div class="meta-label">ターゲット</div><div class="meta-value">高卒＋中途技能</div></div>
+      <div class="meta-item"><div class="meta-label">形式</div><div class="meta-value">カルーセル 6枚</div></div>
+      <div class="meta-item"><div class="meta-label">KPI</div><div class="meta-value">保存 / シェア</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== Week 4 ======== -->
+<div class="week-separator">
+  <h2>Week 4「中途向け」（6/2〜）</h2>
+  <p>ターゲット拡大、中途層の応募獲得</p>
+</div>
+
+<!-- 投稿10: 静止画⑦ 生産技術職 -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-badge new">投稿10 / 6月2日(月) ★NEW</span>
+    <span class="section-title">静止画⑦ 生産技術職って何する人？</span>
+  </div>
+  <div class="ig-post">
+    <div class="ig-header">
+      <div class="ig-avatar">AT</div>
+      <div class="ig-user-info"><div class="ig-username">aisin_takaoka_tohoku</div><div class="ig-location">宮城県大崎市</div></div>
+      <div class="ig-more">•••</div>
+    </div>
+    <div class="carousel-container" data-carousel="c7">
+      <div class="carousel-track">
+        <img src="final_static07/static07_01_cover.png">
+        <img src="final_static07/static07_02_mission.png">
+        <img src="final_static07/static07_03_jobs.png">
+        <img src="final_static07/static07_04_autonomy.png">
+        <img src="final_static07/static07_05_cta.png">
+      </div>
+      <button class="carousel-btn carousel-prev" onclick="move('c7',-1)">◀</button>
+      <button class="carousel-btn carousel-next" onclick="move('c7',1)">▶</button>
+      <div class="carousel-counter" data-counter="c7">1 / 5</div>
+    </div>
+    <div class="carousel-dots" data-dots="c7">
+      <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="ig-actions">
+      <div class="left"><button class="ig-btn">♡</button><button class="ig-btn">💬</button><button class="ig-btn">↗️</button></div>
+      <button class="ig-btn">🔖</button>
+    </div>
+    <div class="ig-likes">87 いいね</div>
+    <div class="ig-caption">
+      <span class="u">aisin_takaoka_tohoku</span>
+      <span class="txt"> 【生産技術って、何する人？⚙️】
+
+量産ラインを動かしつづける仕事。新規立ち上げ・カイゼン・トラシュを回す、プロジェクト型のエンジニアリング。</span>
+      <span class="tags">#AT_Tの仕事図鑑 #中途採用 #生産技術 #ものづくりエンジニア #転職</span>
+    </div>
+    <div class="ig-time-stamp">6月2日 18:00</div>
+    <div class="post-meta">
+      <div class="meta-item"><div class="meta-label">ターゲット</div><div class="meta-value">中途（技術）</div></div>
+      <div class="meta-item"><div class="meta-label">形式</div><div class="meta-value">カルーセル 5枚</div></div>
+      <div class="meta-item"><div class="meta-label">KPI</div><div class="meta-value">保存 / プロフ遷移</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 投稿11: 静止画⑧ 経理・社内SE -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-badge new">投稿11 / 6月4日(水) ★NEW</span>
+    <span class="section-title">静止画⑧ 経理・社内SEのリアル</span>
+  </div>
+  <div class="ig-post">
+    <div class="ig-header">
+      <div class="ig-avatar">AT</div>
+      <div class="ig-user-info"><div class="ig-username">aisin_takaoka_tohoku</div><div class="ig-location">宮城県大崎市</div></div>
+      <div class="ig-more">•••</div>
+    </div>
+    <div class="carousel-container" data-carousel="c8">
+      <div class="carousel-track">
+        <img src="final_static08/static08_01_cover.png">
+        <img src="final_static08/static08_02_accounting.png">
+        <img src="final_static08/static08_03_se.png">
+        <img src="final_static08/static08_04_worklife.png">
+        <img src="final_static08/static08_05_cta.png">
+      </div>
+      <button class="carousel-btn carousel-prev" onclick="move('c8',-1)">◀</button>
+      <button class="carousel-btn carousel-next" onclick="move('c8',1)">▶</button>
+      <div class="carousel-counter" data-counter="c8">1 / 5</div>
+    </div>
+    <div class="carousel-dots" data-dots="c8">
+      <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="ig-actions">
+      <div class="left"><button class="ig-btn">♡</button><button class="ig-btn">💬</button><button class="ig-btn">↗️</button></div>
+      <button class="ig-btn">🔖</button>
+    </div>
+    <div class="ig-likes">74 いいね</div>
+    <div class="ig-caption">
+      <span class="u">aisin_takaoka_tohoku</span>
+      <span class="txt"> 【経理・社内SEのリアル📊💻】
+
+製造業のバックオフィス、実際どんな感じ？<br>経理は連結決算から経営判断まで。社内SEはMES/IoTまで。</span>
+      <span class="tags">#AT_Tの仕事図鑑 #中途採用 #経理 #社内SE #製造業DX</span>
+    </div>
+    <div class="ig-time-stamp">6月4日 18:00</div>
+    <div class="post-meta">
+      <div class="meta-item"><div class="meta-label">ターゲット</div><div class="meta-value">中途（経理/SE）</div></div>
+      <div class="meta-item"><div class="meta-label">形式</div><div class="meta-value">カルーセル 5枚</div></div>
+      <div class="meta-item"><div class="meta-label">KPI</div><div class="meta-value">保存 / プロフ遷移</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 投稿12: 静止画⑨ キャリアステップ -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-badge new">投稿12 / 6月9日(月) ★NEW</span>
+    <span class="section-title">静止画⑨ 入社→3年のキャリアステップ</span>
+  </div>
+  <div class="ig-post">
+    <div class="ig-header">
+      <div class="ig-avatar">AT</div>
+      <div class="ig-user-info"><div class="ig-username">aisin_takaoka_tohoku</div><div class="ig-location">宮城県大崎市</div></div>
+      <div class="ig-more">•••</div>
+    </div>
+    <div class="carousel-container" data-carousel="c9">
+      <div class="carousel-track">
+        <img src="final_static09/static09_01_cover.png">
+        <img src="final_static09/static09_02_year1.png">
+        <img src="final_static09/static09_03_year2.png">
+        <img src="final_static09/static09_04_year3.png">
+        <img src="final_static09/static09_05_cta.png">
+      </div>
+      <button class="carousel-btn carousel-prev" onclick="move('c9',-1)">◀</button>
+      <button class="carousel-btn carousel-next" onclick="move('c9',1)">▶</button>
+      <div class="carousel-counter" data-counter="c9">1 / 5</div>
+    </div>
+    <div class="carousel-dots" data-dots="c9">
+      <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="ig-actions">
+      <div class="left"><button class="ig-btn">♡</button><button class="ig-btn">💬</button><button class="ig-btn">↗️</button></div>
+      <button class="ig-btn">🔖</button>
+    </div>
+    <div class="ig-likes">88 いいね</div>
+    <div class="ig-caption">
+      <span class="u">aisin_takaoka_tohoku</span>
+      <span class="txt"> 【入社3年で、どうなれる？🌱→🌿→🌳】
+
+1年目：教わる側。まずは基礎を。<br>2年目：ひとり立ち。後輩デビューも。<br>3年目：動かす側へ。カイゼン提案も。<br><br>「はじまりは誰でも同じ」——先輩の実例でお見せします。</span>
+      <span class="tags">#AT_T先輩の声 #キャリアステップ #未経験歓迎 #ものづくり #製造業</span>
+    </div>
+    <div class="ig-time-stamp">6月9日 18:00</div>
+    <div class="post-meta">
+      <div class="meta-item"><div class="meta-label">ターゲット</div><div class="meta-value">全ペルソナ</div></div>
+      <div class="meta-item"><div class="meta-label">形式</div><div class="meta-value">カルーセル 5枚</div></div>
+      <div class="meta-item"><div class="meta-label">KPI</div><div class="meta-value">保存 / プロフ遷移</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="note-bar">
+  <strong>※ 注意：</strong>数字（家賃4〜5万円・通勤15分・仙台40分・残業月10〜20h等）は宮城県大崎市の一般的な相場や業界平均に基づく仮値です。貴社の実態と異なる場合は投稿前に差し替えます。写真はGemini生成によるイメージです。実際の投稿では現地撮影写真を使用します。
+</div>
+
+<!-- 投稿13: 静止画⑩ 福利厚生ぜんぶ見せます -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-badge new">投稿13 / 6月11日(水) ★NEW</span>
+    <span class="section-title">静止画⑩ 福利厚生ぜんぶ見せます</span>
+  </div>
+  <div class="ig-post">
+    <div class="ig-header">
+      <div class="ig-avatar">AT</div>
+      <div class="ig-user-info"><div class="ig-username">aisin_takaoka_tohoku</div><div class="ig-location">宮城県大崎市</div></div>
+      <div class="ig-more">•••</div>
+    </div>
+    <div class="carousel-container" data-carousel="c10">
+      <div class="carousel-track">
+        <img src="final_static10/static10_01_cover.png">
+        <img src="final_static10/static10_02_food.png">
+        <img src="final_static10/static10_03_housing.png">
+        <img src="final_static10/static10_04_money.png">
+        <img src="final_static10/static10_05_holiday.png">
+        <img src="final_static10/static10_06_cta.png">
+      </div>
+      <button class="carousel-btn carousel-prev" onclick="move('c10',-1)">◀</button>
+      <button class="carousel-btn carousel-next" onclick="move('c10',1)">▶</button>
+      <div class="carousel-counter" data-counter="c10">1 / 6</div>
+    </div>
+    <div class="carousel-dots" data-dots="c10">
+      <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="ig-actions">
+      <div class="left"><button class="ig-btn">♡</button><button class="ig-btn">💬</button><button class="ig-btn">↗️</button></div>
+      <button class="ig-btn">🔖</button>
+    </div>
+    <div class="ig-likes">96 いいね</div>
+    <div class="ig-caption">
+      <span class="u">aisin_takaoka_tohoku</span>
+      <span class="txt"> 【福利厚生、ぜんぶ見せます🍚🏠💰🌴】
+
+食事・住まい・お金・休み——<br>地元で安心して働ける環境、<br>16項目まとめました。<br><br>「全部そろってる会社」意外と少ないです。</span>
+      <span class="tags">#AT_Tの暮らし #福利厚生 #社員食堂 #住宅手当 #地元就職 #宮城転職</span>
+    </div>
+    <div class="ig-time-stamp">6月11日 18:00</div>
+    <div class="post-meta">
+      <div class="meta-item"><div class="meta-label">ターゲット</div><div class="meta-value">全ペルソナ</div></div>
+      <div class="meta-item"><div class="meta-label">形式</div><div class="meta-value">カルーセル 6枚</div></div>
+      <div class="meta-item"><div class="meta-label">KPI</div><div class="meta-value">保存 / プロフ遷移</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="note-bar" style="background:#e8f5e9; border-left-color:#1B5E20; color:#1B3A1B;">
+  <strong>🎉 静止画シリーズ①〜⑩、完成しました。</strong>次は動画③④（工場見学／転職者の声）→ 動画⑤ブレーキ部品の3本を制作予定。
+</div>
+
+<div style="height:40px;"></div>
+
+<script>
+const state = {};
+function move(id, dir) {
+  const container = document.querySelector('[data-carousel="'+id+'"]');
+  const track = container.querySelector('.carousel-track');
+  const total = track.querySelectorAll('img').length;
+  if (!state[id]) state[id] = 0;
+  state[id] += dir;
+  if (state[id] < 0) state[id] = 0;
+  if (state[id] >= total) state[id] = total - 1;
+  track.style.transform = 'translateX(-' + (state[id] * 100) + '%)';
+  document.querySelector('[data-counter="'+id+'"]').textContent = (state[id]+1) + ' / ' + total;
+  document.querySelectorAll('[data-dots="'+id+'"] .dot').forEach((d,i) => d.classList.toggle('active', i===state[id]));
+}
+</script>
+</body>
+</html>
