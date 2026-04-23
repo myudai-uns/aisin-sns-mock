@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>動画① プレビュー｜新人の1日密着</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Zen Maru Gothic", sans-serif;
+    background: #0c1c0c; color: #fff;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; }
+
+  .header {
+    background: linear-gradient(135deg, #1B5E20, #43A047);
+    padding: 28px 36px; border-radius: 20px;
+    margin-bottom: 30px;
+  }
+  .header h1 { font-size: 26px; font-weight: 900; margin-bottom: 6px; }
+  .header .sub { font-size: 13px; opacity: 0.9; }
+  .header .badges { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .header .badge {
+    background: rgba(255,255,255,0.15); padding: 5px 12px;
+    border-radius: 20px; font-size: 11px; font-weight: 700;
+  }
+  .header .badge b { color: #FFD600; }
+
+  .player-stage {
+    background: #000; border-radius: 24px;
+    padding: 20px; margin: 30px auto;
+    max-width: 420px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 0 8px #1a1a1a;
+    position: relative;
+  }
+  .phone-frame {
+    background: #000; border-radius: 16px;
+    overflow: hidden; position: relative;
+    aspect-ratio: 9/16;
+  }
+  .phone-frame video {
+    width: 100%; height: 100%;
+    display: block; background: #111;
+    object-fit: cover;
+  }
+  .phone-frame .notch {
+    position: absolute; top: 8px; left: 50%;
+    transform: translateX(-50%);
+    width: 120px; height: 22px; background: #000;
+    border-radius: 12px; z-index: 10;
+  }
+  .stage-caption {
+    text-align: center; color: rgba(255,255,255,0.6);
+    font-size: 12px; margin-top: 12px;
+    letter-spacing: 2px;
+  }
+
+  .info {
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px; padding: 24px 28px;
+    margin: 30px 0;
+  }
+  .info h2 {
+    font-size: 18px; color: #FFD600; margin-bottom: 12px;
+    border-left: 5px solid #FFD600; padding-left: 10px;
+  }
+  .info ul { list-style: none; padding: 0; }
+  .info li {
+    padding: 10px 0; font-size: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    line-height: 1.6;
+  }
+  .info li:last-child { border-bottom: none; }
+  .info li b { color: #FFD600; }
+
+  .next-steps {
+    background: linear-gradient(135deg, rgba(255,214,0,0.12), rgba(255,214,0,0.05));
+    border-left: 6px solid #FFD600;
+    padding: 22px 26px; border-radius: 14px;
+    font-size: 14px; line-height: 1.75;
+  }
+  .next-steps h3 {
+    font-size: 16px; color: #FFD600; margin-bottom: 10px;
+  }
+  .next-steps b { color: #fff; }
+
+  .toolbar {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    margin: 20px 0;
+  }
+  .toolbar a {
+    background: #fff; color: #1B5E20;
+    padding: 10px 18px; border-radius: 20px;
+    font-size: 13px; font-weight: 900; text-decoration: none;
+  }
+  .toolbar a:hover { background: #FFD600; }
+  .toolbar a.dl {
+    background: #FFD600; color: #1B3A1B;
+  }
+
+  .note {
+    background: rgba(198,40,40,0.15);
+    border-left: 5px solid #C62828;
+    padding: 14px 20px; border-radius: 10px;
+    font-size: 13px; margin: 20px 0;
+  }
+  .note b { color: #FF8A80; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>🎬 動画①「新人の1日密着ショート」プレビュー</h1>
+    <div class="sub">18カット・60秒・1080×1920（9:16縦）｜Ken Burns仮動画化版</div>
+    <div class="badges">
+      <span class="badge"><b>尺：</b>60秒</span>
+      <span class="badge"><b>撮影：</b>5/11</span>
+      <span class="badge"><b>投稿：</b>5/30</span>
+      <span class="badge">v1 仮動画（静止画パン&ズーム）</span>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <a href="video01_script.html">📝 台本</a>
+    <a href="video01_storyboard.html">🎞 絵コンテ一覧</a>
+    <a href="final_video01_mp4/video01_newcomer_day.mp4" download class="dl">⬇️ MP4ダウンロード</a>
+    <a href="./">🏠 戻る</a>
+  </div>
+
+  <div class="player-stage">
+    <div class="phone-frame">
+      <div class="notch"></div>
+      <video controls autoplay muted loop playsinline preload="auto">
+        <source src="final_video01_mp4/video01_newcomer_day.mp4" type="video/mp4">
+        お使いのブラウザは動画再生に対応していません。
+      </video>
+    </div>
+    <div class="stage-caption">SMARTPHONE PREVIEW — 9:16</div>
+  </div>
+
+  <div class="note">
+    <b>ご留意：</b>これは静止画18枚にKen Burns（パン＆ズーム）効果をかけた<b>仮動画（v1）</b>です。
+    音声（BGM・SE）は未搭載。5/11の実写撮影後、本番動画に差し替えます。
+  </div>
+
+  <div class="info">
+    <h2>この仮動画で確認したいこと</h2>
+    <ul>
+      <li><b>ストーリーの流れ：</b>HOOK→朝→作業→休憩→締めの60秒配分が適切か</li>
+      <li><b>テロップ：</b>文字サイズ・出現タイミング・読みやすさ</li>
+      <li><b>カット尺：</b>3〜4秒の切替リズムに違和感がないか</li>
+      <li><b>コピー：</b>各カットのメッセージが伝わるか</li>
+      <li><b>トーン：</b>「盛らず、等身大」のターゲット（高卒採用）に合っているか</li>
+    </ul>
+  </div>
+
+  <div class="next-steps">
+    <h3>🛠 のちのち動画化する3段階</h3>
+    <b>① 現在：Ken Burns仮動画（v1）</b><br>
+    　静止画にパン＆ズームで動きをつけたプロトタイプ。構成確認用。<br><br>
+    <b>② 次：BGM・SE付き仮動画（v2）</b><br>
+    　ロイヤリティフリー音源＋SE（機械音・チャイム等）を追加。<br><br>
+    <b>③ 本番：実写差し替え版（v3）</b><br>
+    　5/11撮影の実写カットと入れ替え、カラーグレーディング仕上げ。
+  </div>
+
+  <div style="margin-top:40px; padding:16px; text-align:center; font-size:11px; color:rgba(255,255,255,0.4);">
+    AT-T SNS採用コンテンツチーム｜制作：Unsee
+  </div>
+
+</div>
+</body>
+</html>
