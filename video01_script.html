@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>動画① 新人の1日密着ショート 台本</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif;
+    background: #f5f3ec; color: #1B3A1B;
+    line-height: 1.7; padding: 40px 20px 80px;
+  }
+  .wrap { max-width: 1000px; margin: 0 auto; }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #0D47A1 0%, #1565C0 60%, #42A5F5 100%);
+    color: #fff; border-radius: 24px; padding: 40px 48px;
+    box-shadow: 0 10px 30px rgba(13,71,161,0.25);
+    position: relative; overflow: hidden;
+  }
+  .header::after {
+    content: "🎬"; position: absolute; top: 20px; right: 32px;
+    font-size: 64px; opacity: 0.2;
+  }
+  .header .eyebrow {
+    display: inline-block; background: #FFD600; color: #1B3A1B;
+    font-size: 13px; font-weight: 900; padding: 4px 14px;
+    border-radius: 30px; margin-bottom: 14px; letter-spacing: 2px;
+  }
+  .header h1 { font-size: 36px; font-weight: 900; line-height: 1.3; margin-bottom: 10px; }
+  .header .subtitle { font-size: 15px; color: rgba(255,255,255,0.85); margin-bottom: 16px; }
+  .header .meta {
+    display: flex; gap: 20px; flex-wrap: wrap; font-size: 14px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 14px; margin-top: 14px;
+  }
+  .header .meta b { color: #FFD600; margin-right: 4px; }
+
+  /* SECTION */
+  .section {
+    background: #fff; border-radius: 20px;
+    padding: 32px 38px; margin-top: 28px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+    border-left: 10px solid #1565C0;
+    position: relative;
+  }
+  .badge-tag {
+    position: absolute; top: -12px; left: 24px;
+    background: #0D47A1; color: #fff;
+    font-size: 13px; font-weight: 900; padding: 5px 14px;
+    border-radius: 30px; letter-spacing: 1px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  }
+  .section h2 {
+    font-size: 26px; font-weight: 900; color: #0D47A1;
+    margin-bottom: 16px; padding-bottom: 10px;
+    border-bottom: 3px dotted #BBDEFB;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section h2 .ico {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px; background: #FFD600; color: #0D47A1;
+    border-radius: 50%; font-size: 18px; font-weight: 900;
+  }
+  .section h3 {
+    font-size: 20px; font-weight: 900; color: #0D47A1;
+    margin: 22px 0 12px;
+    padding: 8px 14px;
+    background: linear-gradient(90deg, #E3F2FD, transparent);
+    border-left: 6px solid #FFD600;
+  }
+
+  /* 60s TIMELINE */
+  .timeline {
+    display: flex; background: #E3F2FD; border-radius: 12px;
+    overflow: hidden; margin: 20px 0; height: 60px;
+    position: relative;
+  }
+  .tl-phase {
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    color: #fff; font-weight: 900; text-align: center;
+    font-size: 13px; letter-spacing: 0.5px;
+    padding: 4px; border-right: 2px solid rgba(255,255,255,0.3);
+  }
+  .tl-phase:last-child { border-right: none; }
+  .tl-phase small { font-size: 11px; opacity: 0.85; font-weight: 500; }
+  .tl-hook  { flex: 3; background: #C62828; }
+  .tl-morn  { flex: 12; background: #F57C00; }
+  .tl-work  { flex: 25; background: #1B5E20; }
+  .tl-rest  { flex: 15; background: #6A1B9A; }
+  .tl-end   { flex: 5; background: #0D47A1; }
+
+  /* CUT TABLE */
+  .cut-table {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    background: #fff; border-radius: 14px; overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    margin: 18px 0; font-size: 14px;
+  }
+  .cut-table th {
+    background: #0D47A1; color: #fff;
+    font-size: 13px; font-weight: 900;
+    padding: 10px 10px; text-align: left;
+    letter-spacing: 1px;
+  }
+  .cut-table th.n { width: 44px; text-align: center; }
+  .cut-table th.t { width: 90px; }
+  .cut-table th.s { width: 180px; }
+  .cut-table td {
+    padding: 12px 10px; border-bottom: 1px solid #F0F0F0;
+    vertical-align: top; line-height: 1.55;
+  }
+  .cut-table tr:last-child td { border-bottom: none; }
+  .cut-table td.cut-num {
+    text-align: center; font-weight: 900; color: #fff;
+    background: #1565C0; font-size: 15px;
+  }
+  .cut-table td.cut-time {
+    font-family: monospace; font-weight: 900; color: #0D47A1;
+    background: #E3F2FD; font-size: 13px; text-align: center;
+  }
+  .cut-table td.cut-shot { font-weight: 700; color: #333; font-size: 13px; }
+  .cut-table td.cut-telop {
+    background: #FFFDF5; color: #1B3A1B; font-weight: 700;
+    border-left: 3px solid #FFD600;
+  }
+  .cut-table td.cut-telop small {
+    display: block; font-size: 11px; color: #888; margin-top: 2px; font-weight: 400;
+  }
+  .cut-table tr.phase-row td {
+    background: linear-gradient(90deg, #F57C00, #FF9800);
+    color: #fff; font-weight: 900; text-align: center;
+    font-size: 13px; letter-spacing: 2px; padding: 6px;
+  }
+  .cut-table tr.phase-row.p-work td { background: linear-gradient(90deg, #1B5E20, #43A047); }
+  .cut-table tr.phase-row.p-rest td { background: linear-gradient(90deg, #6A1B9A, #9C27B0); }
+  .cut-table tr.phase-row.p-end td  { background: linear-gradient(90deg, #0D47A1, #1976D2); }
+
+  /* CONCEPT BOX */
+  .concept-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin: 18px 0;
+  }
+  .concept-box {
+    background: #FFFDF5; border-radius: 12px; padding: 18px 22px;
+    border-left: 6px solid #FFD600;
+  }
+  .concept-box .cb-label {
+    font-size: 11px; font-weight: 900; color: #F57C00;
+    letter-spacing: 2px; margin-bottom: 6px;
+  }
+  .concept-box .cb-body {
+    font-size: 15px; color: #1B3A1B; font-weight: 700; line-height: 1.55;
+  }
+
+  /* CHECK LIST */
+  .check-list { list-style: none; margin: 12px 0; }
+  .check-list li {
+    padding: 10px 14px 10px 40px;
+    background: #fff; margin-bottom: 6px;
+    border-radius: 10px; border: 2px solid #E3F2FD;
+    position: relative; font-size: 14px;
+  }
+  .check-list li::before {
+    content: "□"; position: absolute; left: 14px; top: 8px;
+    width: 20px; height: 20px; color: #1565C0;
+    font-size: 20px; font-weight: 900;
+  }
+  .check-list li b { color: #0D47A1; }
+
+  /* CALLOUT */
+  .callout {
+    background: linear-gradient(135deg, #FFF9C4, #FFECB3);
+    border-left: 8px solid #FFA000;
+    border-radius: 12px; padding: 16px 22px;
+    margin: 14px 0; font-size: 14px; line-height: 1.7;
+  }
+  .callout::before { content: "⚡ "; font-size: 18px; }
+  .callout b { color: #E65100; }
+
+  /* FOOTER */
+  .footer { text-align: center; margin-top: 40px; padding: 24px; color: #888; font-size: 12px; }
+  .footer .sig {
+    display: inline-block; background: #fff; padding: 10px 24px; border-radius: 30px;
+    color: #0D47A1; font-weight: 700; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .section { page-break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <span class="eyebrow">VIDEO SHOOTING SCRIPT</span>
+    <h1>動画①「新人の1日密着ショート」<br>撮影台本・絵コンテ</h1>
+    <div class="subtitle">Instagram Reels ＋ YouTube Shorts 同時配信用</div>
+    <div class="meta">
+      <div><b>尺：</b>60秒</div>
+      <div><b>サイズ：</b>1080×1920（9:16縦）</div>
+      <div><b>投稿：</b>2026年5月30日（土）18:00</div>
+      <div><b>撮影日：</b>5月11日</div>
+      <div><b>ターゲット：</b>高卒採用</div>
+    </div>
+  </div>
+
+  <!-- CONCEPT -->
+  <div class="section" style="border-left-color:#FFD600;">
+    <span class="badge-tag" style="background:#F9A825; color:#1B3A1B;">CONCEPT</span>
+    <h2><span class="ico">💡</span>企画コンセプト</h2>
+    <div class="concept-grid">
+      <div class="concept-box">
+        <div class="cb-label">TONE / トーン</div>
+        <div class="cb-body">等身大・盛らない・テロップ主導。<br>音無し再生でも理解できる設計。</div>
+      </div>
+      <div class="concept-box">
+        <div class="cb-label">TARGET / ターゲット</div>
+        <div class="cb-body">高卒採用（18歳・宮城県内）。<br>保護者・先生も閲覧想定。</div>
+      </div>
+      <div class="concept-box">
+        <div class="cb-label">MESSAGE / メッセージ</div>
+        <div class="cb-body">「工場ってこんな感じなんだ」<br>を3秒で伝え、60秒で見せる。</div>
+      </div>
+      <div class="concept-box">
+        <div class="cb-label">CTA / ゴール</div>
+        <div class="cb-body">プロフィール遷移／保存。<br>採用ページQR誘導。</div>
+      </div>
+    </div>
+    <div class="callout">
+      <b>演出ルール3つ：</b>①1カット3秒以内（スワイプ離脱対策）／②顔1：現場2の比率（プライバシー配慮）／③テロップは大きく太く・画面中央上寄せ
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="section">
+    <span class="badge-tag">TIMELINE</span>
+    <h2><span class="ico">⏱</span>60秒のストーリー構成</h2>
+    <div class="timeline">
+      <div class="tl-phase tl-hook">HOOK<small>0-3秒</small></div>
+      <div class="tl-phase tl-morn">朝<small>3-15秒</small></div>
+      <div class="tl-phase tl-work">作業<small>15-40秒</small></div>
+      <div class="tl-phase tl-rest">休憩<small>40-55秒</small></div>
+      <div class="tl-phase tl-end">締め<small>55-60秒</small></div>
+    </div>
+    <p style="font-size:13px; color:#666; margin-top:10px;">
+      ※ 配分は「離脱されやすい前半」を短く畳み、「作業の凄さ」に最も尺を使う構成。
+    </p>
+  </div>
+
+  <!-- SHOT LIST -->
+  <div class="section">
+    <span class="badge-tag">SHOT LIST</span>
+    <h2><span class="ico">🎬</span>カット割り（全18カット）</h2>
+
+    <table class="cut-table">
+      <thead>
+        <tr>
+          <th class="n">#</th>
+          <th class="t">時間</th>
+          <th class="s">ショット内容</th>
+          <th>テロップ・音</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="phase-row"><td colspan="4">🎯 HOOK（0〜3秒）</td></tr>
+        <tr>
+          <td class="cut-num">1</td>
+          <td class="cut-time">00:00—00:03</td>
+          <td class="cut-shot">工場外観・朝焼けタイムラプス → 正門カット</td>
+          <td class="cut-telop">「朝、工場って何してると思う？」<small>📢 SE：鳥のさえずり／BGM：薄く立ち上がり</small></td>
+        </tr>
+
+        <tr class="phase-row p-work" style="background: linear-gradient(90deg, #F57C00, #FF9800);"><td colspan="4">🌅 朝（3〜15秒）</td></tr>
+        <tr>
+          <td class="cut-num">2</td>
+          <td class="cut-time">00:03—00:06</td>
+          <td class="cut-shot">主人公が駐車場から工場へ歩く（後ろ姿・ハンドヘルド）</td>
+          <td class="cut-telop">「入社1年目・20歳」<small>📢 BGM：イン（軽快POP系）</small></td>
+        </tr>
+        <tr>
+          <td class="cut-num">3</td>
+          <td class="cut-time">00:06—00:09</td>
+          <td class="cut-shot">朝礼・ラジオ体操（グループワイドで全体像）</td>
+          <td class="cut-telop">「7:45 朝礼スタート」<small>📢 SE：号令「1・2・3・4」軽く</small></td>
+        </tr>
+        <tr>
+          <td class="cut-num">4</td>
+          <td class="cut-time">00:09—00:12</td>
+          <td class="cut-shot">ロッカールーム・作業服に着替える手元アップ</td>
+          <td class="cut-telop">「作業服は毎日洗濯してもらえる✨」<small>📢 SE：布の擦れ音</small></td>
+        </tr>
+        <tr>
+          <td class="cut-num">5</td>
+          <td class="cut-time">00:12—00:15</td>
+          <td class="cut-shot">工場内の廊下を歩く足元／背中</td>
+          <td class="cut-telop">「いざ、持ち場へ。」</td>
+        </tr>
+
+        <tr class="phase-row p-work"><td colspan="4">🔧 作業（15〜40秒）</td></tr>
+        <tr>
+          <td class="cut-num">6</td>
+          <td class="cut-time">00:15—00:19</td>
+          <td class="cut-shot">機械オペレーション・操作盤の手元クローズアップ</td>
+          <td class="cut-telop">「担当は加工工程。」<small>📢 SE：機械の稼働音</small></td>
+        </tr>
+        <tr>
+          <td class="cut-num">7</td>
+          <td class="cut-time">00:19—00:23</td>
+          <td class="cut-shot">部品の品質検査・ノギスで寸法測定</td>
+          <td class="cut-telop">「ミリ単位のチェック、集中。」</td>
+        </tr>
+        <tr>
+          <td class="cut-num">8</td>
+          <td class="cut-time">00:23—00:27</td>
+          <td class="cut-shot">先輩が隣に立ちアドバイスする様子（2ショット）</td>
+          <td class="cut-telop">「困ったら先輩がすぐ来る。」</td>
+        </tr>
+        <tr>
+          <td class="cut-num">9</td>
+          <td class="cut-time">00:27—00:30</td>
+          <td class="cut-shot">先輩と会話しながらうなずく主人公</td>
+          <td class="cut-telop">「マンツーマンで教わる期間あり。」</td>
+        </tr>
+        <tr>
+          <td class="cut-num">10</td>
+          <td class="cut-time">00:30—00:33</td>
+          <td class="cut-shot">部品加工のマクロ（金属削り・火花）</td>
+          <td class="cut-telop">「できるようになった、この瞬間。」</td>
+        </tr>
+        <tr>
+          <td class="cut-num">11</td>
+          <td class="cut-time">00:33—00:37</td>
+          <td class="cut-shot">完成したブレーキ部品を持つ手のアップ</td>
+          <td class="cut-telop">「毎日、車のブレーキ部品に触れる仕事。」</td>
+        </tr>
+        <tr>
+          <td class="cut-num">12</td>
+          <td class="cut-time">00:37—00:40</td>
+          <td class="cut-shot">時計を見る主人公 → ふぅ、と息をつく</td>
+          <td class="cut-telop">「12:00 ランチ！」<small>📢 SE：チャイム</small></td>
+        </tr>
+
+        <tr class="phase-row p-rest"><td colspan="4">🍚 休憩（40〜55秒）</td></tr>
+        <tr>
+          <td class="cut-num">13</td>
+          <td class="cut-time">00:40—00:44</td>
+          <td class="cut-shot">食堂のトレイを持つ手→メニュー選ぶ</td>
+          <td class="cut-telop">「社食は1食300円〜。」<small>※ 実数値は貴社確認待ち</small></td>
+        </tr>
+        <tr>
+          <td class="cut-num">14</td>
+          <td class="cut-time">00:44—00:48</td>
+          <td class="cut-shot">同期と食事・笑顔（複数人ワイド）</td>
+          <td class="cut-telop">「同期とだべるのが楽しい。」</td>
+        </tr>
+        <tr>
+          <td class="cut-num">15</td>
+          <td class="cut-time">00:48—00:51</td>
+          <td class="cut-shot">休憩スペースでスマホ／ぼーっと外を見る</td>
+          <td class="cut-telop">「午後に向けて、充電タイム。」</td>
+        </tr>
+        <tr>
+          <td class="cut-num">16</td>
+          <td class="cut-time">00:51—00:55</td>
+          <td class="cut-shot">午後の作業→制服脱ぐ→退勤準備の連続カット</td>
+          <td class="cut-telop">「16:45 定時でお疲れさまでした。」</td>
+        </tr>
+
+        <tr class="phase-row p-end"><td colspan="4">🌇 締め（55〜60秒）</td></tr>
+        <tr>
+          <td class="cut-num">17</td>
+          <td class="cut-time">00:55—00:58</td>
+          <td class="cut-shot">工場を出て車へ向かう後ろ姿（夕日逆光）</td>
+          <td class="cut-telop">「毎日、ちゃんと帰れる。」<small>📢 BGM：アウトロ</small></td>
+        </tr>
+        <tr>
+          <td class="cut-num">18</td>
+          <td class="cut-time">00:58—01:00</td>
+          <td class="cut-shot">主人公の笑顔アップ → AT-Tロゴ＋QRコード</td>
+          <td class="cut-telop">「こんな1日、アリかも。」<br>@aisin_takaoka_tohoku<small>📢 SE：シャッター音</small></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 5/11 SHOOT PLAN -->
+  <div class="section" style="border-left-color:#C62828;">
+    <span class="badge-tag" style="background:#C62828;">5/11 SHOOT PLAN</span>
+    <h2><span class="ico" style="background:#C62828; color:#fff;">📅</span>撮影日（5/11）当日の段取り</h2>
+
+    <h3>必要なシーン別・所要時間</h3>
+    <ul class="check-list">
+      <li><b>07:45-08:15　朝礼＋着替え</b>（カット3・4）— 実際の朝礼に便乗して撮影</li>
+      <li><b>08:30-10:30　作業シーン</b>（カット6〜11）— 機械オペ／検査／OJT／マクロカット</li>
+      <li><b>10:30-11:00　工場内移動カット</b>（カット5・12）— 廊下・時計・表情</li>
+      <li><b>12:00-13:00　食堂シーン</b>（カット13・14）— 実ランチタイムで収録</li>
+      <li><b>13:30-14:30　休憩・午後作業</b>（カット15・16）</li>
+      <li><b>16:00-17:00　退勤シーン＋外観タイムラプス</b>（カット1・2・17・18）</li>
+    </ul>
+
+    <h3>出演者の条件</h3>
+    <ul class="check-list">
+      <li><b>主人公：</b>入社1年目の若手社員（男女どちらも可）、顔出し同意済みの方1名</li>
+      <li><b>先輩役：</b>OJT担当の中堅社員1名（顔出し可否どちらも可）</li>
+      <li><b>同期役：</b>食堂シーンで2-3名（マスクOK、同意書必須）</li>
+    </ul>
+
+    <h3>貴社にご準備いただきたいもの</h3>
+    <ul class="check-list">
+      <li><b>出演者の同意書</b>（顔出し・音声使用）</li>
+      <li><b>撮影NG箇所の事前マップ</b>（機密図面・特定設備エリア）</li>
+      <li><b>朝礼・食堂の撮影許可</b>（他社員への事前周知）</li>
+      <li><b>AT-Tロゴデータ（白/紺の2版）</b>と<b>採用サイトQRコード</b></li>
+    </ul>
+  </div>
+
+  <!-- EDIT SPEC -->
+  <div class="section" style="border-left-color:#7B1FA2;">
+    <span class="badge-tag" style="background:#7B1FA2;">EDIT SPEC</span>
+    <h2><span class="ico" style="background:#7B1FA2; color:#fff;">✂️</span>編集仕様</h2>
+
+    <div class="concept-grid">
+      <div class="concept-box">
+        <div class="cb-label">BGM</div>
+        <div class="cb-body">ロイヤリティフリー・軽快POP系。<br>例：Epidemic Sound「Sunny Morning」系。<br>音量は控えめ（-20dB程度）。</div>
+      </div>
+      <div class="concept-box">
+        <div class="cb-label">テロップ装飾</div>
+        <div class="cb-body">白地に紺縁取り＋黄色ハイライト。<br>フォント：Zen Maru Gothic Bold。<br>サイズ：60-80px（モバイル可読性重視）。</div>
+      </div>
+      <div class="concept-box">
+        <div class="cb-label">カラーグレーディング</div>
+        <div class="cb-body">彩度+10、コントラスト+5。<br>AI加工っぽさNG、ナチュラル仕上げ。</div>
+      </div>
+      <div class="concept-box">
+        <div class="cb-label">トランジション</div>
+        <div class="cb-body">カット切替は基本ストレートカット。<br>HOOKから朝への導入のみ、軽めのディゾルブ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEW -->
+  <div class="section" style="border-left-color:#1B5E20;">
+    <span class="badge-tag" style="background:#1B5E20;">REVIEW</span>
+    <h2><span class="ico" style="background:#1B5E20; color:#fff;">❓</span>貴社に確認させていただきたい事項</h2>
+    <ul class="check-list">
+      <li><b>主人公候補社員の選定</b>（4/28までに）</li>
+      <li><b>HOOKコピー案</b>「朝、工場って何してると思う？」で問題ないか／代案希望あるか</li>
+      <li><b>食堂の価格表記</b>「1食300円〜」の数字妥当性（実数値要確認）</li>
+      <li><b>退勤時間表記</b>「16:45」が実情に合うか</li>
+      <li><b>BGMの方向性</b>（軽快POP系／落ち着きアコースティック／アンビエント）</li>
+      <li><b>顔出しNG代替案</b>（マスク着用・後ろ姿メインへの切替可否）</li>
+    </ul>
+    <div class="callout">
+      <b>レビュー①</b>（台本段階）：<b>4/28予定</b>。本台本のご確認をお願いします。<br>
+      <b>レビュー②</b>（編集素材）：<b>5/18予定</b>。撮影から1週間後、粗編成をご覧いただきます。
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="sig">AT-T SNS採用コンテンツチーム｜出木杉</div>
+  </div>
+
+</div>
+</body>
+</html>
